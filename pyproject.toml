@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cnn-cifar-10"
+version = "0.1.0"
+description = "A pure NumPy/CuPy implementation of Convolutional Neural Networks for CIFAR-10 classification"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.12"
+authors = [{ name = "Yuxuan SUN", email = "hjsdbb1@gmail.com" }]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  'Intended Audience :: Science/Research',
+  'Intended Audience :: Developers',
+  "Programming Language :: Python",
+  'Programming Language :: Python :: 3',
+  'Programming Language :: Python :: 3.12',
+  'Programming Language :: Python :: 3.13',
+  'Programming Language :: Python :: 3 :: Only',
+]
+
+dependencies = ["matplotlib>=3.10.3", "numpy>=2.2.6", "tqdm>=4.67.1"]
+
+[project.scripts]
+train = "src.train_cli:main"
+
+[tool.hatch.build]
+exclude = ["data", "checkpoint", "flake.nix", "flake.lock", ".envrc"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
