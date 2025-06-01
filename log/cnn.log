@@ -1,0 +1,66 @@
+[Backend] Using NumPy (CPU)
+Testing checkpoint: checkpoint/cnn_best.pkl
+--------------------------------------------------
+Loading CIFAR-10 test data from data/cifar-10-batches-py...
+Test set: (10000, 3, 32, 32)
+Auto-detected model type: cnn
+Created SimpleCNN model
+Loading checkpoint...
+[Checkpoint] Model loaded from checkpoint/cnn_best.pkl
+Model loaded successfully
+Checkpoint accuracy: 57.13%
+Calculating model parameters...
+  a1: (16, 8, 30, 30) -> 115,200 params
+  a2: (16, 128) -> 2,048 params
+  a2_drop: (16, 128) -> 2,048 params
+  conv_b: (8,) -> 8 params
+  conv_bn_beta: (1, 8, 1, 1) -> 8 params
+  conv_bn_gamma: (1, 8, 1, 1) -> 8 params
+  conv_w: (8, 3, 3, 3) -> 216 params
+  d_conv_b: (8,) -> 8 params
+  d_conv_bn_beta: (1, 8, 1, 1) -> 8 params
+  d_conv_bn_gamma: (1, 8, 1, 1) -> 8 params
+  d_conv_w: (8, 3, 3, 3) -> 216 params
+  d_fc1_b: (128,) -> 128 params
+  d_fc1_bn_beta: (128,) -> 128 params
+  d_fc1_bn_gamma: (128,) -> 128 params
+  d_fc1_w: (1800, 128) -> 230,400 params
+  d_fc2_b: (10,) -> 10 params
+  d_fc2_w: (128, 10) -> 1,280 params
+  fc1_b: (128,) -> 128 params
+  fc1_bn_beta: (128,) -> 128 params
+  fc1_bn_gamma: (128,) -> 128 params
+  fc1_w: (1800, 128) -> 230,400 params
+  fc2_b: (10,) -> 10 params
+  fc2_w: (128, 10) -> 1,280 params
+  flat: (16, 1800) -> 28,800 params
+  out: (16, 10) -> 160 params
+  p1: (16, 8, 15, 15) -> 28,800 params
+  x: (16, 3, 32, 32) -> 49,152 params
+  z1: (16, 8, 30, 30) -> 115,200 params
+  z1_bn: (16, 8, 30, 30) -> 115,200 params
+  z2: (16, 128) -> 2,048 params
+  z2_bn: (16, 128) -> 2,048 params
+  z3: (16, 10) -> 160 params
+Model: SimpleCNN, Parameters: 925,492
+--------------------------------------------------
+Evaluating on 10000 test samples...
+Overall Test Accuracy: 58.12%
+Calculating per-class accuracy...
+
+Per-class Accuracy:
+plane: 62.10%
+car: 72.20%
+bird: 43.50%
+cat: 39.40%
+deer: 50.70%
+dog: 42.90%
+frog: 67.40%
+horse: 62.50%
+ship: 73.20%
+truck: 67.30%
+
+Summary:
+Model: SimpleCNN (925,492 parameters)
+Test Accuracy: 58.12%
+Checkpoint Accuracy: 57.13%

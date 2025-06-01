@@ -1,0 +1,48 @@
+[Backend] Using NumPy (CPU)
+Testing checkpoint: checkpoint/resnet32_best.pkl
+--------------------------------------------------
+Loading CIFAR-10 test data from data/cifar-10-batches-py...
+Test set: (10000, 3, 32, 32)
+Auto-detected model type: resnet32
+Created ResNet-32 model
+Loading checkpoint...
+[Checkpoint] Model loaded from checkpoint/resnet32_best.pkl
+Model loaded successfully
+Checkpoint accuracy: 60.03%
+Calculating model parameters...
+  d_fc_b: (10,) -> 10 params
+  d_fc_w: (64, 10) -> 640 params
+  d_init_bn_beta: (1, 16, 1, 1) -> 16 params
+  d_init_bn_gamma: (1, 16, 1, 1) -> 16 params
+  d_init_conv_b: (16,) -> 16 params
+  d_init_conv_w: (16, 3, 3, 3) -> 432 params
+  fc_b: (10,) -> 10 params
+  fc_w: (64, 10) -> 640 params
+  init_bn_beta: (1, 16, 1, 1) -> 16 params
+  init_bn_gamma: (1, 16, 1, 1) -> 16 params
+  init_conv_b: (16,) -> 16 params
+  init_conv_w: (16, 3, 3, 3) -> 432 params
+Counting parameters in 15 blocks...
+Model: ResNet32, Parameters: 936,276
+--------------------------------------------------
+Evaluating on 10000 test samples...
+Overall Test Accuracy: 60.30%
+Calculating per-class accuracy...
+
+Per-class Accuracy:
+plane: 72.60%
+car: 69.90%
+bird: 39.90%
+cat: 51.90%
+deer: 36.40%
+dog: 42.40%
+frog: 77.90%
+horse: 63.60%
+ship: 76.80%
+truck: 71.60%
+
+Summary:
+Model: ResNet32 (936,276 parameters)
+Test Accuracy: 60.30%
+Checkpoint Accuracy: 60.03%
+

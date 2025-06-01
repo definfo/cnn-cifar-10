@@ -101,7 +101,6 @@
           pre-commit.settings.hooks = {
             commitizen.enable = true;
             eclint.enable = true;
-            editorconfig-checker.enable = true;
             markdownlint.enable = true;
             ruff.enable = true;
             treefmt.enable = true;
