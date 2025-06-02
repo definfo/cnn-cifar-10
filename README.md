@@ -8,7 +8,7 @@ A pure NumPy/CuPy implementation of Convolutional Neural Networks for CIFAR-10 c
 
 - Basic CNN with convolution, batchnorm, ReLU, maxpooling, fully connected layers
 - Lightweight architecture suitable for quick experiments
-- **Recommended settings**: SGD optimizer, lr=0.01, dropout=0.5, 20 epochs
+- **Recommended settings**: SGD optimizer, lr=0.01, dropout=0.5, 200 epochs
 
 ### ResNet-32
 
@@ -46,8 +46,26 @@ nix develop .#cuda
 After entering devshell, you may configure Python deps through uv:
 
 ```bash
+# Configure common dependencies
 uv sync
+
+### Following steps are CUDA-only ###
+# Configure CUDA dependencies
+uv sync --group cuda
+
+# (Optional) Configure CuPy with CUDA libraries for extra speedup
+# `<library>` can be replaced by cutensor/nccl/cudnn
+uv run python -m cupyx.tools.install_library --library <library> --cuda 12.x
+
+# Check CuPy status
+uv run python -c "import cupy; import cupy.cuda.cudnn; import cupy.cuda.nccl; cupy.show_config()"
 ```
+
+Other possible dependencies:
+
+- Linux kernel: `6.12.30 (mainline)`
+
+- NVIDIA driver: `nvidia_x11-open 570.153.02`
 
 ### Training with Default Settings (Recommended)
 
@@ -97,28 +115,38 @@ uv run src/train_cli.py \
     --batch-size 128 \
     --dropout-rate 0.3 \
     --epochs 100 \
-    --checkpoint-dir checkpoints \
+    --checkpoint-dir checkpoint \
     --data data/cifar-10-batches-py
 ```
 
 ### Resume Training
 
 ```bash
-uv run src/train_cli.py --model resnet32 --resume checkpoints/resnet32_epoch25.pkl
+uv run src/train_cli.py --model resnet32 --resume checkpoint/resnet32_epoch25.pkl
+```
+
+### Run test on checkpoint
+
+```bash
+uv run src/test_cli.py --model resnet32 --resume checkpoint/resnet32_best.pkl
 ```
 
 ## Performance Expectations
 
 ### SimpleCNN
 
-- **Training time**: ~5-10 minutes (20 epochs, CPU)
-- **Expected accuracy**: 65-75% on CIFAR-10
+- **Training time**:
+  - 20 sec / epoch (Intel Core i7-12700H CPU)
+  - 6 sec / epoch (NVIDIA GeForce RTX 3060 Laptop GPU)
+- **Expected accuracy**: 55-65% on CIFAR-10
 - **Parameters**: ~50K
 
 ### ResNet-32
 
-- **Training time**: ~30-60 minutes (50 epochs, CPU)
-- **Expected accuracy**: 80-90% on CIFAR-10
+- **Training time**:
+  - 50 min / epoch (Intel Core i7-12700H CPU)
+  - 7.5 min / epoch (NVIDIA GeForce RTX 3060 Laptop GPU)
+- **Expected accuracy**: 70-75% on CIFAR-10
 - **Parameters**: ~460K
 
 ## Model Architecture
@@ -148,3 +176,11 @@ Each residual block contains:
 - Conv 3×3 + BatchNorm
 - Skip connection (with 1×1 conv for dimension matching if needed)
 - Final ReLU
+
+## Known issues
+
+1. Test accuracy during training appears to be lower than actual value.
+
+2. Current model serde implementation is not optimal and may contain garbage variables.
+
+3. `train_utils.py` contains fragile vibe-coding snippets, which requires refactoring.
