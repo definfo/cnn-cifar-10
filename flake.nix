@@ -64,7 +64,15 @@
             # config.cudaVersion = "12";
           };
           inherit (pkgs-unfree.linuxPackages) nvidia_x11;
-          inherit (pkgs-unfree.cudaPackages_12) cuda_cudart cudnn cudatoolkit;
+          inherit (pkgs-unfree.cudaPackages_12)
+            cudatoolkit
+            cuda_cudart
+            cuda_nvrtc
+            cudnn
+            nccl
+            cutensor
+            cusparselt
+            ;
         in
         {
           # https://flake.parts/options/treefmt-nix.html
@@ -107,11 +115,11 @@
           };
 
           # This devShell adds Python and CUDA toolchain.
-          devShells.cuda = pkgs.mkShell {
+          devShells.cuda = pkgs.mkShell rec {
             shellHook = ''
               ${config.pre-commit.installationScript}
               unset PYTHONPATH
-              export CUDA_PATH=${cudatoolkit}
+              export LD_LIBRARY_PATH="${lib.makeLibraryPath pkgs.pythonManylinuxPackages.manylinux1}:${nvidia_x11}/lib:${lib.makeLibraryPath packages}";
 
               echo 1>&2 "Welcome to the development shell!"
             '';
@@ -119,9 +127,13 @@
             packages =
               [
                 python
-                cuda_cudart
                 cudatoolkit
+                cuda_cudart
+                cuda_nvrtc
                 cudnn
+                nccl
+                cutensor
+                cusparselt
                 nvidia_x11
               ]
               ++ (with pkgs; [
@@ -148,7 +160,6 @@
               // lib.optionalAttrs pkgs.stdenv.isLinux {
                 # Python libraries often load native shared objects using dlopen(3).
                 # Setting LD_LIBRARY_PATH makes the dynamic library loader aware of libraries without using RPATH for lookup.
-                LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:${lib.makeLibraryPath pkgs.pythonManylinuxPackages.manylinux1}:${nvidia_x11}/lib";
                 # CUDA-related
                 CUDA_PATH = "${cudatoolkit}";
                 EXTRA_LDFLAGS = "-L/lib -L${nvidia_x11}/lib";

@@ -85,6 +85,8 @@ def main():
         )
         default_dropout = 0.3  # Lower dropout for deeper networks
         default_epochs = 50 if args.epochs == 10 else args.epochs  # More epochs needed
+    else:
+        raise ValueError(f"Unknown model type: {args.model}")
 
     # Apply defaults if not explicitly set
     if args.lr is None:
@@ -183,6 +185,9 @@ def main():
     best_path = None
     start_epoch = 0
 
+    # Ensure checkpoint directory exists
+    os.makedirs(args.checkpoint_dir, exist_ok=True)
+
     if args.resume:
         print(f"[INFO] Loading checkpoint from {args.resume}")
         resumed_acc = load_checkpoint(model, args.resume)
@@ -211,12 +216,14 @@ def main():
             args.lr,
             _epoch=epoch,
             checkpoint_dir=args.checkpoint_dir,
+            model_name=args.model,
             X_test=X_test,
             y_test=y_test,
         )
         if acc > best_acc:
             best_acc = acc
             best_path = os.path.join(args.checkpoint_dir, f"{args.model}_best.pkl")
+            print(f"[DEBUG] Checkpoint path: {best_path}")
             save_checkpoint(model, best_path, accuracy=best_acc)
             print(f"[INFO] New best model saved: {best_path}")
 

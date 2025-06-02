@@ -155,6 +155,7 @@ def train(
     lr,
     _epoch,
     checkpoint_dir=None,
+    model_name=None,
     X_test=None,
     y_test=None,
     test_batch_size=32,
@@ -197,16 +198,22 @@ def train(
         print(f"[Epoch {_epoch + 1}] Loss: {running_loss / num_batches:.4f}")
     avg_loss = running_loss / num_batches
     print(f"[Epoch {_epoch + 1}] Average Loss: {avg_loss:.4f}")
-    if checkpoint_dir:
+
+    accuracy = test(model, X_test, y_test, test_batch_size or batch_size)
+
+    # Save checkpoint for this epoch
+    if checkpoint_dir is not None:
+        # Ensure checkpoint directory exists
         os.makedirs(checkpoint_dir, exist_ok=True)
-        save_checkpoint(
-            model,
-            os.path.join(checkpoint_dir, f"{model.name}_epoch{_epoch + 1}.pkl"),
-            accuracy=0.0,  # Placeholder, will be updated in testing
+
+        # Save epoch checkpoint
+        model_name = model_name if model_name is not None else model.name
+        epoch_checkpoint_path = os.path.join(
+            checkpoint_dir, f"{model_name}_epoch{_epoch + 1}.pkl"
         )
-    if X_test is not None and y_test is not None:
-        return test(model, X_test, y_test, test_batch_size or batch_size)
-    return 0.0
+        save_checkpoint(model, epoch_checkpoint_path, accuracy=accuracy)
+
+    return accuracy
 
 
 def test(model, X_test, y_test, batch_size):

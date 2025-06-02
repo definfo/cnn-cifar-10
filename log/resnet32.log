@@ -1,48 +1,105 @@
-[Backend] Using NumPy (CPU)
-Testing checkpoint: checkpoint/resnet32_best.pkl
---------------------------------------------------
-Loading CIFAR-10 test data from data/cifar-10-batches-py...
-Test set: (10000, 3, 32, 32)
-Auto-detected model type: resnet32
-Created ResNet-32 model
-Loading checkpoint...
-[Checkpoint] Model loaded from checkpoint/resnet32_best.pkl
-Model loaded successfully
-Checkpoint accuracy: 60.03%
-Calculating model parameters...
-  d_fc_b: (10,) -> 10 params
-  d_fc_w: (64, 10) -> 640 params
-  d_init_bn_beta: (1, 16, 1, 1) -> 16 params
-  d_init_bn_gamma: (1, 16, 1, 1) -> 16 params
-  d_init_conv_b: (16,) -> 16 params
-  d_init_conv_w: (16, 3, 3, 3) -> 432 params
-  fc_b: (10,) -> 10 params
-  fc_w: (64, 10) -> 640 params
-  init_bn_beta: (1, 16, 1, 1) -> 16 params
-  init_bn_gamma: (1, 16, 1, 1) -> 16 params
-  init_conv_b: (16,) -> 16 params
-  init_conv_w: (16, 3, 3, 3) -> 432 params
-Counting parameters in 15 blocks...
-Model: ResNet32, Parameters: 936,276
---------------------------------------------------
-Evaluating on 10000 test samples...
-Overall Test Accuracy: 60.30%
-Calculating per-class accuracy...
-
-Per-class Accuracy:
-plane: 72.60%
-car: 69.90%
-bird: 39.90%
-cat: 51.90%
-deer: 36.40%
-dog: 42.40%
-frog: 77.90%
-horse: 63.60%
-ship: 76.80%
-truck: 71.60%
-
-Summary:
-Model: ResNet32 (936,276 parameters)
-Test Accuracy: 60.30%
-Checkpoint Accuracy: 60.03%
-
+[Backend] Using CuPy (GPU)
+[INFO] Loading CIFAR-10 from data/cifar-10-batches-py ...
+[INFO] Training set: (50000, 3, 32, 32), Test set: (10000, 3, 32, 32)
+[INFO] Using default learning rate: 0.01
+[INFO] Using default optimizer: ADAM
+[INFO] Using default dropout rate: 0.3
+[INFO] Using larger batch size for ResNet: 128
+[INFO] Using ADAM parameters: beta1=0.9, beta2=0.999
+[INFO] Using ResNet-32 model with ADAM optimizer
+[INFO] Hyperparameters: lr=0.01, dropout=0.3, epochs=20
+[INFO] ADAM parameters: beta1=0.9, beta2=0.999
+[INFO] Model: ResNet32, Parameters: 936,276
+[INFO] Starting epoch 1/20
+[Epoch 1] Average Loss: 2.1562
+[Test] Accuracy: 2912/10000 (29.12%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 2/20
+[Epoch 2] Average Loss: 1.7432
+[Test] Accuracy: 4179/10000 (41.79%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 3/20
+[Epoch 3] Average Loss: 1.5209
+[Test] Accuracy: 4812/10000 (48.12%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 4/20
+[Epoch 4] Average Loss: 1.3960
+[Test] Accuracy: 5214/10000 (52.14%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 5/20
+[Epoch 5] Average Loss: 1.2846
+[Test] Accuracy: 5560/10000 (55.60%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 6/20
+[Epoch 6] Average Loss: 1.1936
+[Test] Accuracy: 5703/10000 (57.03%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 7/20
+[Epoch 7] Average Loss: 1.1018
+[Test] Accuracy: 6087/10000 (60.87%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 8/20
+[Epoch 8] Average Loss: 1.0077
+[Test] Accuracy: 6412/10000 (64.12%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 9/20
+[Epoch 9] Average Loss: 0.9233
+[Test] Accuracy: 6746/10000 (67.46%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 10/20
+[Epoch 10] Average Loss: 0.8420
+[Test] Accuracy: 6894/10000 (68.94%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 11/20
+[Epoch 11] Average Loss: 0.7742
+[Test] Accuracy: 6950/10000 (69.50%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 12/20
+[Epoch 12] Average Loss: 0.7076
+[Test] Accuracy: 7175/10000 (71.75%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 13/20
+[Epoch 13] Average Loss: 0.6417
+[Test] Accuracy: 7316/10000 (73.16%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 14/20
+[Epoch 14] Average Loss: 0.5881
+[Test] Accuracy: 7257/10000 (72.57%)
+[INFO] Starting epoch 15/20
+[Epoch 15] Average Loss: 0.5316
+[Test] Accuracy: 7298/10000 (72.98%)
+[INFO] Starting epoch 16/20
+[Epoch 16] Average Loss: 0.4877
+[Test] Accuracy: 7315/10000 (73.15%)
+[INFO] Starting epoch 17/20
+[Epoch 17] Average Loss: 0.4376
+[Test] Accuracy: 7322/10000 (73.22%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 18/20
+[Epoch 18] Average Loss: 0.3916
+[Test] Accuracy: 7366/10000 (73.66%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 19/20
+[Epoch 19] Average Loss: 0.3503
+[Test] Accuracy: 7386/10000 (73.86%)
+[Checkpoint] Model saved to checkpoint/resnet32_best.pkl
+[INFO] New best model saved: checkpoint/resnet32_best.pkl
+[INFO] Starting epoch 20/20
+[Epoch 20] Average Loss: 0.3225
+[Test] Accuracy: 7363/10000 (73.63%)
+[RESULT] Best test accuracy: 73.86% (model: checkpoint/resnet32_best.pkl)

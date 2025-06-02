@@ -195,8 +195,6 @@ def main():
 
         if verbose:
             print("Model loaded successfully")
-            if checkpoint_acc is not None:
-                print(f"Checkpoint accuracy: {checkpoint_acc:.2f}%")
 
         # Calculate model parameters
         total_params = 0
@@ -268,8 +266,6 @@ def main():
             print("\nSummary:")
             print(f"Model: {results['model_name']} ({total_params:,} parameters)")
             print(f"Test Accuracy: {results['overall_accuracy']:.2f}%")
-            if checkpoint_acc is not None:
-                print(f"Checkpoint Accuracy: {checkpoint_acc:.2f}%")
 
     except Exception as e:
         print(f"Error: {e}")
