@@ -36,3 +36,7 @@ packages = ["src"]
 cuda = [
     "cupy-cuda12x>=13.4.1",
 ]
+viz = [
+    "pandas>=2.2.3",
+    "seaborn>=0.13.2",
+]
