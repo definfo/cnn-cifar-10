@@ -33,6 +33,14 @@ You may also install [direnv](https://direnv.net/docs/installation.html) for bet
 devshell integration.
 
 ```bash
+# Clone this repo
+git clone https://github.com/definfo/cnn-cifar-10.git
+cd cnn-cifar-10
+
+# (Optional) Reuse pre-trained model checkpoints
+# NOTE: this checkpoint is only usable with CuPy backend
+git lfs pull
+
 # with direnv (see `.envrc` for details)
 direnv allow
 
@@ -179,8 +187,10 @@ Each residual block contains:
 
 ## Known issues
 
+1. Model checkpoints cannot be reused across backends (NumPy/CuPy).
+
 1. Test accuracy during training appears to be lower than actual value.
 
-2. Current model serde implementation is not optimal and may contain garbage variables.
+1. Current model serde implementation is not optimal and may contain garbage variables.
 
-3. `train_utils.py` contains fragile vibe-coding snippets, which requires refactoring.
+1. `train_utils.py` contains fragile vibe-coding snippets, which requires refactoring.
