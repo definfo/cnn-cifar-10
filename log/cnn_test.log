@@ -5,59 +5,48 @@ Loading CIFAR-10 test data from data/cifar-10-batches-py...
 Test set: (10000, 3, 32, 32)
 Created SimpleCNN model
 Loading checkpoint...
+[WARNING] Attempting to load checkpoint that may contain CuPy arrays...
 [Checkpoint] Model loaded from checkpoint/cnn_best.pkl
 Model loaded successfully
 Calculating model parameters...
-  a1: (16, 8, 30, 30) -> 115,200 params
-  a2: (16, 128) -> 2,048 params
-  a2_drop: (16, 128) -> 2,048 params
-  conv_b: (8,) -> 8 params
-  conv_bn_beta: (1, 8, 1, 1) -> 8 params
-  conv_bn_gamma: (1, 8, 1, 1) -> 8 params
-  conv_w: (8, 3, 3, 3) -> 216 params
-  d_conv_b: (8,) -> 8 params
-  d_conv_bn_beta: (1, 8, 1, 1) -> 8 params
-  d_conv_bn_gamma: (1, 8, 1, 1) -> 8 params
-  d_conv_w: (8, 3, 3, 3) -> 216 params
-  d_fc1_b: (128,) -> 128 params
-  d_fc1_bn_beta: (128,) -> 128 params
-  d_fc1_bn_gamma: (128,) -> 128 params
-  d_fc1_w: (1800, 128) -> 230,400 params
-  d_fc2_b: (10,) -> 10 params
-  d_fc2_w: (128, 10) -> 1,280 params
-  fc1_b: (128,) -> 128 params
-  fc1_bn_beta: (128,) -> 128 params
-  fc1_bn_gamma: (128,) -> 128 params
-  fc1_w: (1800, 128) -> 230,400 params
-  fc2_b: (10,) -> 10 params
-  fc2_w: (128, 10) -> 1,280 params
-  flat: (16, 1800) -> 28,800 params
-  out: (16, 10) -> 160 params
-  p1: (16, 8, 15, 15) -> 28,800 params
-  x: (16, 3, 32, 32) -> 49,152 params
-  z1: (16, 8, 30, 30) -> 115,200 params
-  z1_bn: (16, 8, 30, 30) -> 115,200 params
-  z2: (16, 128) -> 2,048 params
-  z2_bn: (16, 128) -> 2,048 params
-  z3: (16, 10) -> 160 params
-Model: SimpleCNN, Parameters: 925,492
+  conv1_b: (16,) -> 16 params
+  conv1_w: (16, 3, 3, 3) -> 432 params
+  conv2_b: (32,) -> 32 params
+  conv2_w: (32, 16, 3, 3) -> 4,608 params
+  d_conv1_b: (16,) -> 16 params
+  d_conv1_w: (16, 3, 3, 3) -> 432 params
+  d_conv2_b: (32,) -> 32 params
+  d_conv2_w: (32, 16, 3, 3) -> 4,608 params
+  d_fc1_b: (256,) -> 256 params
+  d_fc1_w: (1152, 256) -> 294,912 params
+  d_fc2_b: (128,) -> 128 params
+  d_fc2_w: (256, 128) -> 32,768 params
+  d_fc3_b: (10,) -> 10 params
+  d_fc3_w: (128, 10) -> 1,280 params
+  fc1_b: (256,) -> 256 params
+  fc1_w: (1152, 256) -> 294,912 params
+  fc2_b: (128,) -> 128 params
+  fc2_w: (256, 128) -> 32,768 params
+  fc3_b: (10,) -> 10 params
+  fc3_w: (128, 10) -> 1,280 params
+Model: SimpleCNN, Parameters: 668,884
 --------------------------------------------------
 Evaluating on 10000 test samples...
-Overall Test Accuracy: 60.22%
+Overall Test Accuracy: 65.98%
 Calculating per-class accuracy...
 
 Per-class Accuracy:
-plane: 63.40%
-car: 73.90%
-bird: 42.30%
-cat: 42.10%
-deer: 52.20%
-dog: 51.70%
-frog: 71.60%
-horse: 65.60%
-ship: 75.20%
-truck: 64.20%
+plane: 70.90%
+car: 73.80%
+bird: 51.60%
+cat: 45.30%
+deer: 62.20%
+dog: 58.40%
+frog: 73.90%
+horse: 71.50%
+ship: 77.60%
+truck: 74.60%
 
 Summary:
-Model: SimpleCNN (925,492 parameters)
-Test Accuracy: 60.22%
+Model: SimpleCNN (668,884 parameters)
+Test Accuracy: 65.98%

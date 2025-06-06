@@ -2,10 +2,10 @@ CNN CIFAR-10 Training Summary Report
 ========================================
 
 Training Statistics:
-Total epochs: 200
-Final training loss: 1.0990
-Best training loss: 1.0989
-Final training accuracy: 59.05%
-Best training accuracy: 59.15%
+Total epochs: 40
+Final training loss: 0.6063
+Best training loss: 0.6063
+Final training accuracy: 65.89%
+Best training accuracy: 65.98%
 
 No test data available

@@ -127,13 +127,13 @@ def main():
     # Set model-specific defaults
     if args.model == "cnn":
         # SimpleCNN optimized defaults for 200 epochs
-        default_lr = 0.02  # Higher initial LR for longer training with cosine decay
+        default_lr = 0.015  # Higher initial LR for longer training with cosine decay
         default_optimizer = "sgd"  # SGD works well with momentum for longer training
         default_dropout = 0.6  # Higher initial dropout for longer training
         default_epochs = (
-            200 if args.epochs == 10 else args.epochs
+            40 if args.epochs == 10 else args.epochs
         )  # 200 epochs for thorough training
-        default_warmup = 10  # Longer warmup for higher learning rate
+        default_warmup = 6  # Longer warmup for higher learning rate
     elif args.model == "resnet32":
         # ResNet-32 optimized defaults
         default_lr = 0.01
