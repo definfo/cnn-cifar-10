@@ -3,13 +3,7 @@ import pickle
 import numpy as np
 from utilities.backend import xp, to_cpu, convert_array_to_current_backend
 
-try:
-    from tqdm import tqdm as tqdm_cls
-
-    HAS_TQDM = True
-except ImportError:
-    tqdm_cls = None
-    HAS_TQDM = False
+from tqdm import tqdm as tqdm_cls
 
 
 class CrossBackendUnpickler(pickle.Unpickler):
@@ -228,6 +222,121 @@ def sgd_update(param, grad, lr):
     return param
 
 
+class LearningRateScheduler:
+    """Learning rate scheduler with warmup, linear decay, and cosine annealing."""
+
+    def __init__(
+        self,
+        base_lr,
+        total_epochs,
+        warmup_epochs=0,
+        decay_type="cosine",
+        min_lr=1e-6,
+        decay_factor=0.1,
+        decay_steps=None,
+    ):
+        self.base_lr = base_lr
+        self.total_epochs = total_epochs
+        self.warmup_epochs = warmup_epochs
+        self.decay_type = decay_type.lower()
+        self.min_lr = min_lr
+        self.decay_factor = decay_factor
+        self.decay_steps = decay_steps or []
+
+    def get_lr(self, epoch):
+        """Get learning rate for given epoch."""
+        if epoch < self.warmup_epochs:
+            # Linear warmup
+            return self.base_lr * (epoch + 1) / self.warmup_epochs
+
+        # Adjust epoch for post-warmup scheduling
+        adjusted_epoch = epoch - self.warmup_epochs
+        adjusted_total = self.total_epochs - self.warmup_epochs
+
+        if self.decay_type == "cosine":
+            # Cosine annealing
+            lr = (
+                self.min_lr
+                + (self.base_lr - self.min_lr)
+                * (1 + xp.cos(xp.pi * adjusted_epoch / adjusted_total))
+                / 2
+            )
+        elif self.decay_type == "linear":
+            # Linear decay
+            lr = self.base_lr * (1 - adjusted_epoch / adjusted_total)
+            lr = max(lr, self.min_lr)
+        elif self.decay_type == "step":
+            # Step decay
+            lr = self.base_lr
+            for step in self.decay_steps:
+                if epoch >= step:
+                    lr *= self.decay_factor
+            lr = max(lr, self.min_lr)
+        else:
+            # Constant learning rate
+            lr = self.base_lr
+
+        return float(lr)
+
+
+class DynamicDropout:
+    """Dynamic dropout that adapts during training."""
+
+    def __init__(
+        self,
+        initial_rate=0.5,
+        min_rate=0.1,
+        max_rate=0.7,
+        strategy="linear_decay",
+        plateau_patience=5,
+    ):
+        self.initial_rate = initial_rate
+        self.min_rate = min_rate
+        self.max_rate = max_rate
+        self.strategy = strategy.lower()
+        self.plateau_patience = plateau_patience
+        self.best_acc = 0.0
+        self.plateau_count = 0
+
+    def get_dropout_rate(self, epoch, total_epochs, current_acc=None):
+        """Get dropout rate for given epoch and performance."""
+        if self.strategy == "linear_decay":
+            # Linear decay from initial to min
+            progress = epoch / total_epochs
+            rate = self.initial_rate * (1 - progress) + self.min_rate * progress
+        elif self.strategy == "cosine_decay":
+            # Cosine decay
+            progress = epoch / total_epochs
+            rate = (
+                self.min_rate
+                + (self.initial_rate - self.min_rate)
+                * (1 + xp.cos(xp.pi * progress))
+                / 2
+            )
+        elif self.strategy == "adaptive":
+            # Adaptive based on performance
+            if current_acc is not None:
+                if current_acc > self.best_acc:
+                    self.best_acc = current_acc
+                    self.plateau_count = 0
+                    # Reduce dropout when improving
+                    rate = max(self.initial_rate * 0.9, self.min_rate)
+                else:
+                    self.plateau_count += 1
+                    if self.plateau_count >= self.plateau_patience:
+                        # Increase dropout when plateauing
+                        rate = min(self.initial_rate * 1.2, self.max_rate)
+                    else:
+                        rate = self.initial_rate
+            else:
+                rate = self.initial_rate
+        else:
+            # Constant dropout
+            rate = self.initial_rate
+
+        return max(self.min_rate, min(rate, self.max_rate))
+
+
 def train(
     model,
     X_train,
@@ -240,6 +349,8 @@ def train(
     X_test=None,
     y_test=None,
     test_batch_size=32,
+    lr_scheduler=None,
+    dropout_scheduler=None,
 ) -> float:
     num_samples = X_train.shape[0]
     indices = xp.arange(num_samples)
@@ -249,12 +360,16 @@ def train(
     running_loss = 0.0
     num_batches = (num_samples + batch_size - 1) // batch_size
     batch_iter = range(num_batches)
-    pbar = None
-    if HAS_TQDM and tqdm_cls is not None:
-        pbar = tqdm_cls(batch_iter, desc=f"Epoch {_epoch + 1}", ncols=80, leave=False)
+    pbar = tqdm_cls(batch_iter, desc=f"Epoch {_epoch + 1}", ncols=80, leave=False)
 
     # Set model to training mode
     model.train()
+
+    # Update learning rate if scheduler is provided
+    current_lr = lr
+    if lr_scheduler is not None:
+        current_lr = lr_scheduler.get_lr(_epoch)
+        print(f"[Epoch {_epoch + 1}] Learning rate: {current_lr:.6f}")
 
     for batch_idx in batch_iter:
         i = batch_idx * batch_size
@@ -269,10 +384,10 @@ def train(
         running_loss += float(to_cpu(loss_val))
         model.zero_grad()
         model.backward(y_batch)
-        model.step(lr)
+        model.step(current_lr)
         if pbar is not None:
             pbar.update(1)
-            pbar.set_postfix(loss=running_loss / (batch_idx + 1))
+            pbar.set_postfix(loss=running_loss / (batch_idx + 1), lr=current_lr)
     if pbar is not None:
         pbar.close()
     if pbar is None:
@@ -281,6 +396,18 @@ def train(
     print(f"[Epoch {_epoch + 1}] Average Loss: {avg_loss:.4f}")
 
     accuracy = test(model, X_test, y_test, test_batch_size or batch_size)
+
+    # Update dropout rate if scheduler is provided
+    if dropout_scheduler is not None:
+        old_dropout = model.dropout_rate
+        # Pass total epochs - need to get from somewhere, for now use a reasonable default
+        total_epochs = getattr(model, "_total_epochs", 100)
+        new_dropout = dropout_scheduler.get_dropout_rate(_epoch, total_epochs, accuracy)
+        if abs(new_dropout - old_dropout) > 0.01:  # Only update if significant change
+            model.dropout_rate = new_dropout
+            print(
+                f"[Epoch {_epoch + 1}] Dropout rate updated: {old_dropout:.3f} -> {new_dropout:.3f}"
+            )
 
     # Save checkpoint for this epoch
     if checkpoint_dir is not None:

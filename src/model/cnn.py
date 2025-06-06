@@ -185,6 +185,7 @@ class SimpleCNN:
     ):
         self.name = "SimpleCNN"
         self.dropout_rate = dropout_rate
+        self.initial_dropout_rate = dropout_rate  # Store initial rate
         self.training = True
         self.optimizer_type = optimizer
 
@@ -430,6 +431,10 @@ class SimpleCNN:
         """Set model to evaluation mode."""
         self.training = False
 
+    def update_dropout_rate(self, new_rate):
+        """Update dropout rate during training."""
+        self.dropout_rate = max(0.0, min(1.0, new_rate))  # Clamp to [0, 1]
+
 
 class ResidualBlock:
     """Basic residual block for ResNet."""
@@ -662,6 +667,7 @@ class ResNet32:
     ):
         self.name = "ResNet32"
         self.dropout_rate = dropout_rate
+        self.initial_dropout_rate = dropout_rate  # Store initial rate
         self.training = True
         self.optimizer_type = optimizer
 
@@ -949,3 +955,7 @@ class ResNet32:
     def eval(self):
         """Set model to evaluation mode."""
         self.training = False
+
+    def update_dropout_rate(self, new_rate):
+        """Update dropout rate during training."""
+        self.dropout_rate = max(0.0, min(1.0, new_rate))  # Clamp to [0, 1]
