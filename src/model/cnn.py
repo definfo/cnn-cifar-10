@@ -170,8 +170,8 @@ class AdamOptimizer:
 
 class SimpleCNN:
     """
-    A minimal CNN for CIFAR-10 using xp (NumPy or CuPy). Supports forward and backward.
-    Architecture: Conv -> BatchNorm -> ReLU -> MaxPool -> FC -> BatchNorm -> ReLU -> Dropout -> FC -> Softmax
+    A CNN for CIFAR-10 using xp (NumPy or CuPy). Supports forward and backward.
+    Architecture: Conv -> MaxPool -> Conv -> MaxPool -> Flatten -> FC -> ReLU -> FC -> ReLU -> FC -> Softmax
     """
 
     def __init__(
@@ -185,28 +185,29 @@ class SimpleCNN:
     ):
         self.name = "SimpleCNN"
         self.dropout_rate = dropout_rate
+        self.initial_dropout_rate = dropout_rate
         self.training = True
         self.optimizer_type = optimizer
 
-        # Conv: 3x32x32 -> 8x30x30 (kernel=3, stride=1, no padding)
-        self.conv_w = xp.random.randn(8, 3, 3, 3).astype(xp.float32) * 0.1
-        self.conv_b = xp.zeros(8, dtype=xp.float32)
+        # Conv1: 3x32x32 -> 16x30x30 (kernel=3, stride=1, no padding)
+        self.conv1_w = xp.random.randn(16, 3, 3, 3).astype(xp.float32) * 0.1
+        self.conv1_b = xp.zeros(16, dtype=xp.float32)
 
-        # Batch norm for conv layer
-        self.conv_bn_gamma = xp.ones((1, 8, 1, 1), dtype=xp.float32)
-        self.conv_bn_beta = xp.zeros((1, 8, 1, 1), dtype=xp.float32)
+        # Conv2: 16x15x15 -> 32x13x13 (kernel=3, stride=1, no padding, after maxpool)
+        self.conv2_w = xp.random.randn(32, 16, 3, 3).astype(xp.float32) * 0.1
+        self.conv2_b = xp.zeros(32, dtype=xp.float32)
 
-        # FC1: flatten 8x15x15 (after 2x2 maxpool) -> 128
-        self.fc1_w = xp.random.randn(8 * 15 * 15, 128).astype(xp.float32) * 0.1
-        self.fc1_b = xp.zeros(128, dtype=xp.float32)
+        # FC1: flatten 32x6x6 (after 2x2 maxpool) -> 256
+        self.fc1_w = xp.random.randn(32 * 6 * 6, 256).astype(xp.float32) * 0.1
+        self.fc1_b = xp.zeros(256, dtype=xp.float32)
 
-        # Batch norm for fc1 layer
-        self.fc1_bn_gamma = xp.ones(128, dtype=xp.float32)
-        self.fc1_bn_beta = xp.zeros(128, dtype=xp.float32)
+        # FC2: 256 -> 128
+        self.fc2_w = xp.random.randn(256, 128).astype(xp.float32) * 0.1
+        self.fc2_b = xp.zeros(128, dtype=xp.float32)
 
-        # FC2: 128 -> num_classes
-        self.fc2_w = xp.random.randn(128, num_classes).astype(xp.float32) * 0.1
-        self.fc2_b = xp.zeros(num_classes, dtype=xp.float32)
+        # FC3: 128 -> num_classes
+        self.fc3_w = xp.random.randn(128, num_classes).astype(xp.float32) * 0.1
+        self.fc3_b = xp.zeros(num_classes, dtype=xp.float32)
 
         # Gradients
         self.zero_grad()
@@ -215,20 +216,20 @@ class SimpleCNN:
         if optimizer.lower() == "adam":
             self.optimizer = AdamOptimizer(lr=lr, beta1=beta1, beta2=beta2)
         else:
-            self.optimizer = None  # Use SGD
+            self.optimizer = None
             self.lr = lr
 
     def zero_grad(self):
-        self.d_conv_w = xp.zeros_like(self.conv_w)
-        self.d_conv_b = xp.zeros_like(self.conv_b)
-        self.d_conv_bn_gamma = xp.zeros_like(self.conv_bn_gamma)
-        self.d_conv_bn_beta = xp.zeros_like(self.conv_bn_beta)
+        self.d_conv1_w = xp.zeros_like(self.conv1_w)
+        self.d_conv1_b = xp.zeros_like(self.conv1_b)
+        self.d_conv2_w = xp.zeros_like(self.conv2_w)
+        self.d_conv2_b = xp.zeros_like(self.conv2_b)
         self.d_fc1_w = xp.zeros_like(self.fc1_w)
         self.d_fc1_b = xp.zeros_like(self.fc1_b)
-        self.d_fc1_bn_gamma = xp.zeros_like(self.fc1_bn_gamma)
-        self.d_fc1_bn_beta = xp.zeros_like(self.fc1_bn_beta)
         self.d_fc2_w = xp.zeros_like(self.fc2_w)
         self.d_fc2_b = xp.zeros_like(self.fc2_b)
+        self.d_fc3_w = xp.zeros_like(self.fc3_w)
+        self.d_fc3_b = xp.zeros_like(self.fc3_b)
 
     def conv2d(self, x, w, b):
         N, C, H, W = x.shape
@@ -285,15 +286,16 @@ class SimpleCNN:
 
         x_flat = x_reshaped.reshape(N, C, out_h, out_w, size * size)
         out = x_flat.max(axis=4)
-        self.pool_cache = (x, x_flat.argmax(axis=4))
-        return out
+        # Return both output and cache for this specific pooling operation
+        pool_cache = (x, x_flat.argmax(axis=4))
+        return out, pool_cache
 
-    def maxpool2d_backward(self, dout, x_shape, size=2, stride=2):
+    def maxpool2d_backward(self, dout, x_shape, pool_cache, size=2, stride=2):
         N, C, H, W = x_shape
         out_h = (H - size) // stride + 1
         out_w = (W - size) // stride + 1
 
-        x, argmax = self.pool_cache
+        x, argmax = pool_cache
         dx = xp.zeros_like(x)
 
         # Optimized CPU backward pass
@@ -316,111 +318,109 @@ class SimpleCNN:
 
     def forward(self, x):
         self.x = x
-        # Conv -> BatchNorm -> ReLU -> MaxPool
-        self.z1 = self.conv2d(x, self.conv_w, self.conv_b)
-        self.z1_bn, self.conv_bn_cache = batch_norm_forward(
-            self.z1.reshape(-1, self.z1.shape[1]),
-            self.conv_bn_gamma.reshape(-1),
-            self.conv_bn_beta.reshape(-1),
-        )
-        self.z1_bn = self.z1_bn.reshape(self.z1.shape)
-        self.a1 = relu(self.z1_bn)
-        self.p1 = self.maxpool2d(self.a1)
 
-        # FC1 -> BatchNorm -> ReLU -> Dropout
-        self.flat = self.p1.reshape(x.shape[0], -1)
-        self.z2 = self.flat @ self.fc1_w + self.fc1_b
-        self.z2_bn, self.fc1_bn_cache = batch_norm_forward(
-            self.z2, self.fc1_bn_gamma, self.fc1_bn_beta
-        )
-        self.a2 = relu(self.z2_bn)
-        self.a2_drop, self.dropout_mask = dropout_forward(
-            self.a2, self.dropout_rate, self.training
-        )
+        # Conv1 -> ReLU -> MaxPool
+        self.z1 = self.conv2d(x, self.conv1_w, self.conv1_b)
+        self.a1 = relu(self.z1)
+        self.p1, self.pool1_cache = self.maxpool2d(self.a1)  # 16x15x15
 
-        # FC2 -> Softmax
-        self.z3 = self.a2_drop @ self.fc2_w + self.fc2_b
-        self.out = softmax(self.z3)
+        # Conv2 -> ReLU -> MaxPool
+        self.z2 = self.conv2d(self.p1, self.conv2_w, self.conv2_b)
+        self.a2 = relu(self.z2)
+        self.p2, self.pool2_cache = self.maxpool2d(self.a2)  # 32x6x6
+
+        # Flatten
+        self.flat = self.p2.reshape(x.shape[0], -1)
+
+        # FC1 -> ReLU
+        self.z3 = self.flat @ self.fc1_w + self.fc1_b
+        self.a3 = relu(self.z3)
+
+        # FC2 -> ReLU
+        self.z4 = self.a3 @ self.fc2_w + self.fc2_b
+        self.a4 = relu(self.z4)
+
+        # FC3 -> Softmax
+        self.z5 = self.a4 @ self.fc3_w + self.fc3_b
+        self.out = softmax(self.z5)
         return self.out
 
     def backward(self, y):
         # y: (N,) integer labels
-        dout = cross_entropy_grad(self.out, y)  # (N, num_classes)
+        dout = cross_entropy_grad(self.out, y)
 
-        # FC2
-        self.d_fc2_w = self.a2_drop.T @ dout
-        self.d_fc2_b = xp.sum(dout, axis=0)
-        da2_drop = dout @ self.fc2_w.T
+        # FC3
+        self.d_fc3_w = self.a4.T @ dout
+        self.d_fc3_b = xp.sum(dout, axis=0)
+        da4 = dout @ self.fc3_w.T
 
-        # Dropout backward
-        da2 = dropout_backward(da2_drop, self.dropout_mask, self.dropout_rate)
-        dz2_bn = da2 * relu_deriv(self.z2_bn)
+        # FC2 -> ReLU
+        dz4 = da4 * relu_deriv(self.z4)
+        self.d_fc2_w = self.a3.T @ dz4
+        self.d_fc2_b = xp.sum(dz4, axis=0)
+        da3 = dz4 @ self.fc2_w.T
 
-        # FC1 batch norm backward
-        dz2, dgamma_fc1, dbeta_fc1 = batch_norm_backward(dz2_bn, self.fc1_bn_cache)
-        self.d_fc1_bn_gamma = dgamma_fc1.squeeze()
-        self.d_fc1_bn_beta = dbeta_fc1.squeeze()
+        # FC1 -> ReLU
+        dz3 = da3 * relu_deriv(self.z3)
+        self.d_fc1_w = self.flat.T @ dz3
+        self.d_fc1_b = xp.sum(dz3, axis=0)
+        dflat = dz3 @ self.fc1_w.T
+        dp2 = dflat.reshape(self.p2.shape)
 
-        # FC1
-        self.d_fc1_w = self.flat.T @ dz2
-        self.d_fc1_b = xp.sum(dz2, axis=0)
-        dflat = dz2 @ self.fc1_w.T
-        dp1 = dflat.reshape(self.p1.shape)
+        # MaxPool2
+        da2 = self.maxpool2d_backward(dp2, self.a2.shape, self.pool2_cache)
+        dz2 = da2 * relu_deriv(self.z2)
 
-        # MaxPool
-        da1 = self.maxpool2d_backward(dp1, self.a1.shape)
-        dz1_bn = da1 * relu_deriv(self.z1_bn)
+        # Conv2
+        dp1, dw2, db2 = self.conv2d_backward(self.p1, self.conv2_w, dz2)
+        self.d_conv2_w = dw2
+        self.d_conv2_b = db2
 
-        # Conv batch norm backward
-        dz1_bn_flat = dz1_bn.reshape(-1, dz1_bn.shape[1])
-        dz1_flat, dgamma_conv, dbeta_conv = batch_norm_backward(
-            dz1_bn_flat, self.conv_bn_cache
-        )
-        dz1 = dz1_flat.reshape(self.z1.shape)
-        self.d_conv_bn_gamma = dgamma_conv.reshape(self.conv_bn_gamma.shape)
-        self.d_conv_bn_beta = dbeta_conv.reshape(self.conv_bn_beta.shape)
+        # MaxPool1
+        da1 = self.maxpool2d_backward(dp1, self.a1.shape, self.pool1_cache)
+        dz1 = da1 * relu_deriv(self.z1)
 
-        # Conv
-        dx, dw, db = self.conv2d_backward(self.x, self.conv_w, dz1)
-        self.d_conv_w = dw
-        self.d_conv_b = db
+        # Conv1
+        dx, dw1, db1 = self.conv2d_backward(self.x, self.conv1_w, dz1)
+        self.d_conv1_w = dw1
+        self.d_conv1_b = db1
 
     def step(self, lr=None):
         """Update parameters using the specified optimizer."""
         if self.optimizer_type.lower() == "adam":
             self.optimizer.step()
             # Update all parameters using ADAM
-            self.conv_w = self.optimizer.update("conv_w", self.conv_w, self.d_conv_w)
-            self.conv_b = self.optimizer.update("conv_b", self.conv_b, self.d_conv_b)
-            self.conv_bn_gamma = self.optimizer.update(
-                "conv_bn_gamma", self.conv_bn_gamma, self.d_conv_bn_gamma
+            self.conv1_w = self.optimizer.update(
+                "conv1_w", self.conv1_w, self.d_conv1_w
             )
-            self.conv_bn_beta = self.optimizer.update(
-                "conv_bn_beta", self.conv_bn_beta, self.d_conv_bn_beta
+            self.conv1_b = self.optimizer.update(
+                "conv1_b", self.conv1_b, self.d_conv1_b
+            )
+            self.conv2_w = self.optimizer.update(
+                "conv2_w", self.conv2_w, self.d_conv2_w
+            )
+            self.conv2_b = self.optimizer.update(
+                "conv2_b", self.conv2_b, self.d_conv2_b
             )
             self.fc1_w = self.optimizer.update("fc1_w", self.fc1_w, self.d_fc1_w)
             self.fc1_b = self.optimizer.update("fc1_b", self.fc1_b, self.d_fc1_b)
-            self.fc1_bn_gamma = self.optimizer.update(
-                "fc1_bn_gamma", self.fc1_bn_gamma, self.d_fc1_bn_gamma
-            )
-            self.fc1_bn_beta = self.optimizer.update(
-                "fc1_bn_beta", self.fc1_bn_beta, self.d_fc1_bn_beta
-            )
             self.fc2_w = self.optimizer.update("fc2_w", self.fc2_w, self.d_fc2_w)
             self.fc2_b = self.optimizer.update("fc2_b", self.fc2_b, self.d_fc2_b)
+            self.fc3_w = self.optimizer.update("fc3_w", self.fc3_w, self.d_fc3_w)
+            self.fc3_b = self.optimizer.update("fc3_b", self.fc3_b, self.d_fc3_b)
         else:
             # SGD update
             effective_lr = lr if lr is not None else self.lr
-            self.conv_w -= effective_lr * self.d_conv_w
-            self.conv_b -= effective_lr * self.d_conv_b
-            self.conv_bn_gamma -= effective_lr * self.d_conv_bn_gamma
-            self.conv_bn_beta -= effective_lr * self.d_conv_bn_beta
+            self.conv1_w -= effective_lr * self.d_conv1_w
+            self.conv1_b -= effective_lr * self.d_conv1_b
+            self.conv2_w -= effective_lr * self.d_conv2_w
+            self.conv2_b -= effective_lr * self.d_conv2_b
             self.fc1_w -= effective_lr * self.d_fc1_w
             self.fc1_b -= effective_lr * self.d_fc1_b
-            self.fc1_bn_gamma -= effective_lr * self.d_fc1_bn_gamma
-            self.fc1_bn_beta -= effective_lr * self.d_fc1_bn_beta
             self.fc2_w -= effective_lr * self.d_fc2_w
             self.fc2_b -= effective_lr * self.d_fc2_b
+            self.fc3_w -= effective_lr * self.d_fc3_w
+            self.fc3_b -= effective_lr * self.d_fc3_b
 
     def train(self):
         """Set model to training mode."""
@@ -429,6 +429,10 @@ class SimpleCNN:
     def eval(self):
         """Set model to evaluation mode."""
         self.training = False
+
+    def update_dropout_rate(self, new_rate):
+        """Update dropout rate during training."""
+        self.dropout_rate = max(0.0, min(1.0, new_rate))
 
 
 class ResidualBlock:
@@ -662,6 +666,7 @@ class ResNet32:
     ):
         self.name = "ResNet32"
         self.dropout_rate = dropout_rate
+        self.initial_dropout_rate = dropout_rate  # Store initial rate
         self.training = True
         self.optimizer_type = optimizer
 
@@ -949,3 +954,7 @@ class ResNet32:
     def eval(self):
         """Set model to evaluation mode."""
         self.training = False
+
+    def update_dropout_rate(self, new_rate):
+        """Update dropout rate during training."""
+        self.dropout_rate = max(0.0, min(1.0, new_rate))  # Clamp to [0, 1]

@@ -1,1047 +1,264 @@
 [Backend] Using CuPy (GPU)
 [INFO] Loading CIFAR-10 from data/cifar-10-batches-py ...
 [INFO] Training set: (50000, 3, 32, 32), Test set: (10000, 3, 32, 32)
-[INFO] Using default learning rate: 0.01
+[INFO] Using default learning rate: 0.02
 [INFO] Using default optimizer: SGD
-[INFO] Using default dropout rate: 0.5
+[INFO] Using default dropout rate: 0.6
+[INFO] Using recommended epochs for cnn: 40
+[INFO] Using default warmup epochs: 6
+[INFO] Using cosine learning rate schedule with 6 warmup epochs
 [INFO] Using SimpleCNN model with SGD optimizer
-[INFO] Hyperparameters: lr=0.01, dropout=0.5, epochs=200
-[INFO] Model: SimpleCNN, Parameters: 464,628
-[INFO] Starting epoch 1/200
-[Epoch 1] Average Loss: 2.1594
-[Test] Accuracy: 3520/10000 (35.20%)
+[INFO] Hyperparameters: lr=0.02, dropout=0.6, epochs=40
+[INFO] Model: SimpleCNN, Parameters: 668,884
+[INFO] Starting epoch 1/40
+Epoch 1:   0%|                                          | 0/782 [00:00<?, ?it/s][Epoch 1] Learning rate: 0.003333
+[Epoch 1] Average Loss: 2.2364                                                  
+[Test] Accuracy: 2467/10000 (24.67%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch1.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 2/200
-[Epoch 2] Average Loss: 1.8732
-[Test] Accuracy: 3962/10000 (39.62%)
+[INFO] Starting epoch 2/40
+Epoch 2:   0%|                                          | 0/782 [00:00<?, ?it/s][Epoch 2] Learning rate: 0.006667
+[Epoch 2] Average Loss: 1.9525                                                  
+[Test] Accuracy: 3449/10000 (34.49%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch2.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 3/200
-[Epoch 3] Average Loss: 1.7831
-[Test] Accuracy: 4069/10000 (40.69%)
+[INFO] Starting epoch 3/40
+Epoch 3:   0%|                                          | 0/782 [00:00<?, ?it/s][Epoch 3] Learning rate: 0.010000
+[Epoch 3] Average Loss: 1.7608                                                  
+[Test] Accuracy: 3195/10000 (31.95%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch3.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 4/200
-[Epoch 4] Average Loss: 1.7338
-[Test] Accuracy: 4224/10000 (42.24%)
+[INFO] Starting epoch 4/40
+Epoch 4:   0%|                                          | 0/782 [00:00<?, ?it/s][Epoch 4] Learning rate: 0.013333
+[Epoch 4] Average Loss: 1.6165                                                  
+[Test] Accuracy: 4094/10000 (40.94%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch4.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 5/200
-[Epoch 5] Average Loss: 1.6992
-[Test] Accuracy: 4373/10000 (43.73%)
+[INFO] Starting epoch 5/40
+Epoch 5:   0%|                                          | 0/782 [00:00<?, ?it/s][Epoch 5] Learning rate: 0.016667
+[Epoch 5] Average Loss: 1.5215                                                  
+[Test] Accuracy: 4468/10000 (44.68%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch5.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 6/200
-[Epoch 6] Average Loss: 1.6737
-[Test] Accuracy: 4425/10000 (44.25%)
+[INFO] Starting epoch 6/40
+Epoch 6:   0%|                                          | 0/782 [00:00<?, ?it/s][Epoch 6] Learning rate: 0.020000
+[Epoch 6] Average Loss: 1.4286                                                  
+[Test] Accuracy: 4949/10000 (49.49%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch6.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 7/200
-[Epoch 7] Average Loss: 1.6500
-[Test] Accuracy: 4412/10000 (44.12%)
+[INFO] Starting epoch 7/40
+Epoch 7:   0%|                                          | 0/782 [00:00<?, ?it/s][Epoch 7] Learning rate: 0.020000
+[Epoch 7] Average Loss: 1.3448                                                  
+[Test] Accuracy: 4971/10000 (49.71%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch7.pkl
-[INFO] Starting epoch 8/200
-[Epoch 8] Average Loss: 1.6346
-[Test] Accuracy: 4530/10000 (45.30%)
+[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
+[Checkpoint] Model saved to checkpoint/cnn_best.pkl
+[INFO] New best model saved: checkpoint/cnn_best.pkl
+[INFO] Starting epoch 8/40
+Epoch 8:   0%|                                          | 0/782 [00:00<?, ?it/s][Epoch 8] Learning rate: 0.019957
+[Epoch 8] Average Loss: 1.2736                                                  
+[Test] Accuracy: 4713/10000 (47.13%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch8.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 9/200
-[Epoch 9] Average Loss: 1.6136
-[Test] Accuracy: 4521/10000 (45.21%)
+[INFO] Starting epoch 9/40
+Epoch 9:   0%|                                          | 0/782 [00:00<?, ?it/s][Epoch 9] Learning rate: 0.019830
+[Epoch 9] Average Loss: 1.2179                                                  
+[Test] Accuracy: 5464/10000 (54.64%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch9.pkl
-[INFO] Starting epoch 10/200
-[Epoch 10] Average Loss: 1.6078
-[Test] Accuracy: 4563/10000 (45.63%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch10.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 11/200
-[Epoch 11] Average Loss: 1.5952
-[Test] Accuracy: 4602/10000 (46.02%)
+[INFO] Starting epoch 10/40
+Epoch 10:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 10] Learning rate: 0.019618
+[Epoch 10] Average Loss: 1.1641                                                 
+[Test] Accuracy: 5277/10000 (52.77%)
+[Checkpoint] Model saved to checkpoint/cnn_epoch10.pkl
+[INFO] Starting epoch 11/40
+Epoch 11:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 11] Learning rate: 0.019325
+[Epoch 11] Average Loss: 1.1237                                                 
+[Test] Accuracy: 5563/10000 (55.63%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch11.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 12/200
-[Epoch 12] Average Loss: 1.5822
-[Test] Accuracy: 4665/10000 (46.65%)
+[INFO] Starting epoch 12/40
+Epoch 12:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 12] Learning rate: 0.018952
+[Epoch 12] Average Loss: 1.0828                                                 
+[Test] Accuracy: 5486/10000 (54.86%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch12.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 13/200
-[Epoch 13] Average Loss: 1.5734
-[Test] Accuracy: 4724/10000 (47.24%)
+[INFO] Starting epoch 13/40
+Epoch 13:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 13] Learning rate: 0.018502
+[Epoch 13] Average Loss: 1.0443                                                 
+[Test] Accuracy: 5130/10000 (51.30%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch13.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 14/200
-[Epoch 14] Average Loss: 1.5562
-[Test] Accuracy: 4754/10000 (47.54%)
+[INFO] Starting epoch 14/40
+Epoch 14:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 14] Learning rate: 0.017980
+[Epoch 14] Average Loss: 1.0118                                                 
+[Test] Accuracy: 5823/10000 (58.23%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch14.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 15/200
-[Epoch 15] Average Loss: 1.5529
-[Test] Accuracy: 4801/10000 (48.01%)
+[INFO] Starting epoch 15/40
+Epoch 15:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 15] Learning rate: 0.017390
+[Epoch 15] Average Loss: 0.9803                                                 
+[Test] Accuracy: 5476/10000 (54.76%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch15.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 16/200
-[Epoch 16] Average Loss: 1.5408
-[Test] Accuracy: 4730/10000 (47.30%)
+[INFO] Starting epoch 16/40
+Epoch 16:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 16] Learning rate: 0.016737
+[Epoch 16] Average Loss: 0.9554                                                 
+[Test] Accuracy: 6268/10000 (62.68%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch16.pkl
-[INFO] Starting epoch 17/200
-[Epoch 17] Average Loss: 1.5368
-[Test] Accuracy: 4811/10000 (48.11%)
+[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
+[Checkpoint] Model saved to checkpoint/cnn_best.pkl
+[INFO] New best model saved: checkpoint/cnn_best.pkl
+[INFO] Starting epoch 17/40
+Epoch 17:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 17] Learning rate: 0.016027
+[Epoch 17] Average Loss: 0.9264                                                 
+[Test] Accuracy: 4780/10000 (47.80%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch17.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 18/200
-[Epoch 18] Average Loss: 1.5258
-[Test] Accuracy: 4870/10000 (48.70%)
+[INFO] Starting epoch 18/40
+Epoch 18:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 18] Learning rate: 0.015265
+[Epoch 18] Average Loss: 0.8980                                                 
+[Test] Accuracy: 5973/10000 (59.73%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch18.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 19/200
-[Epoch 19] Average Loss: 1.5223
-[Test] Accuracy: 4866/10000 (48.66%)
+[INFO] Starting epoch 19/40
+Epoch 19:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 19] Learning rate: 0.014458
+[Epoch 19] Average Loss: 0.8758                                                 
+[Test] Accuracy: 6165/10000 (61.65%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch19.pkl
-[INFO] Starting epoch 20/200
-[Epoch 20] Average Loss: 1.5114
-[Test] Accuracy: 4880/10000 (48.80%)
+[INFO] Starting epoch 20/40
+Epoch 20:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 20] Learning rate: 0.013613
+[Epoch 20] Average Loss: 0.8511                                                 
+[Test] Accuracy: 6142/10000 (61.42%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch20.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 21/200
-[Epoch 21] Average Loss: 1.5111
-[Test] Accuracy: 4899/10000 (48.99%)
+[INFO] Starting epoch 21/40
+Epoch 21:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 21] Learning rate: 0.012737
+[Epoch 21] Average Loss: 0.8277                                                 
+[Test] Accuracy: 6138/10000 (61.38%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch21.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 22/200
-[Epoch 22] Average Loss: 1.5014
-[Test] Accuracy: 4940/10000 (49.40%)
+[INFO] Starting epoch 22/40
+Epoch 22:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 22] Learning rate: 0.011838
+[Epoch 22] Average Loss: 0.8054                                                 
+[Test] Accuracy: 6207/10000 (62.07%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch22.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 23/200
-[Epoch 23] Average Loss: 1.4947
-[Test] Accuracy: 4952/10000 (49.52%)
+[INFO] Starting epoch 23/40
+Epoch 23:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 23] Learning rate: 0.010923
+[Epoch 23] Average Loss: 0.7825                                                 
+[Test] Accuracy: 6386/10000 (63.86%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch23.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 24/200
-[Epoch 24] Average Loss: 1.4915
-[Test] Accuracy: 4946/10000 (49.46%)
+[INFO] Starting epoch 24/40
+Epoch 24:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 24] Learning rate: 0.010000
+[Epoch 24] Average Loss: 0.7634                                                 
+[Test] Accuracy: 6315/10000 (63.15%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch24.pkl
-[INFO] Starting epoch 25/200
-[Epoch 25] Average Loss: 1.4796
-[Test] Accuracy: 4982/10000 (49.82%)
+[INFO] Starting epoch 25/40
+Epoch 25:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 25] Learning rate: 0.009078
+[Epoch 25] Average Loss: 0.7451                                                 
+[Test] Accuracy: 6363/10000 (63.63%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch25.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 26/200
-[Epoch 26] Average Loss: 1.4809
-[Test] Accuracy: 4973/10000 (49.73%)
+[INFO] Starting epoch 26/40
+Epoch 26:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 26] Learning rate: 0.008163
+[Epoch 26] Average Loss: 0.7282                                                 
+[Test] Accuracy: 6438/10000 (64.38%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch26.pkl
-[INFO] Starting epoch 27/200
-[Epoch 27] Average Loss: 1.4781
-[Test] Accuracy: 5006/10000 (50.06%)
+[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
+[Checkpoint] Model saved to checkpoint/cnn_best.pkl
+[INFO] New best model saved: checkpoint/cnn_best.pkl
+[INFO] Starting epoch 27/40
+Epoch 27:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 27] Learning rate: 0.007264
+[Epoch 27] Average Loss: 0.7110                                                 
+[Test] Accuracy: 6325/10000 (63.25%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch27.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 28/200
-[Epoch 28] Average Loss: 1.4697
-[Test] Accuracy: 5041/10000 (50.41%)
+[INFO] Starting epoch 28/40
+Epoch 28:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 28] Learning rate: 0.006388
+[Epoch 28] Average Loss: 0.6952                                                 
+[Test] Accuracy: 6391/10000 (63.91%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch28.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 29/200
-[Epoch 29] Average Loss: 1.4677
-[Test] Accuracy: 5020/10000 (50.20%)
+[INFO] Starting epoch 29/40
+Epoch 29:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 29] Learning rate: 0.005543
+[Epoch 29] Average Loss: 0.6814                                                 
+[Test] Accuracy: 6564/10000 (65.64%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch29.pkl
-[INFO] Starting epoch 30/200
-[Epoch 30] Average Loss: 1.4645
-[Test] Accuracy: 5047/10000 (50.47%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch30.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 31/200
-[Epoch 31] Average Loss: 1.4555
-[Test] Accuracy: 5074/10000 (50.74%)
+[INFO] Starting epoch 30/40
+Epoch 30:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 30] Learning rate: 0.004736
+[Epoch 30] Average Loss: 0.6674                                                 
+[Test] Accuracy: 6423/10000 (64.23%)
+[Checkpoint] Model saved to checkpoint/cnn_epoch30.pkl
+[INFO] Starting epoch 31/40
+Epoch 31:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 31] Learning rate: 0.003974
+[Epoch 31] Average Loss: 0.6559                                                 
+[Test] Accuracy: 6582/10000 (65.82%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch31.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 32/200
-[Epoch 32] Average Loss: 1.4528
-[Test] Accuracy: 5101/10000 (51.01%)
+[INFO] Starting epoch 32/40
+Epoch 32:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 32] Learning rate: 0.003264
+[Epoch 32] Average Loss: 0.6455                                                 
+[Test] Accuracy: 6509/10000 (65.09%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch32.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 33/200
-[Epoch 33] Average Loss: 1.4476
-[Test] Accuracy: 5105/10000 (51.05%)
+[INFO] Starting epoch 33/40
+Epoch 33:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 33] Learning rate: 0.002611
+[Epoch 33] Average Loss: 0.6360                                                 
+[Test] Accuracy: 6573/10000 (65.73%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch33.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 34/200
-[Epoch 34] Average Loss: 1.4466
-[Test] Accuracy: 5087/10000 (50.87%)
+[INFO] Starting epoch 34/40
+Epoch 34:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 34] Learning rate: 0.002021
+[Epoch 34] Average Loss: 0.6285                                                 
+[Test] Accuracy: 6584/10000 (65.84%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch34.pkl
-[INFO] Starting epoch 35/200
-[Epoch 35] Average Loss: 1.4358
-[Test] Accuracy: 5147/10000 (51.47%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch35.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 36/200
-[Epoch 36] Average Loss: 1.4338
-[Test] Accuracy: 5145/10000 (51.45%)
+[INFO] Starting epoch 35/40
+Epoch 35:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 35] Learning rate: 0.001499
+[Epoch 35] Average Loss: 0.6222                                                 
+[Test] Accuracy: 6566/10000 (65.66%)
+[Checkpoint] Model saved to checkpoint/cnn_epoch35.pkl
+[INFO] Starting epoch 36/40
+Epoch 36:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 36] Learning rate: 0.001049
+[Epoch 36] Average Loss: 0.6172                                                 
+[Test] Accuracy: 6581/10000 (65.81%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch36.pkl
-[INFO] Starting epoch 37/200
-[Epoch 37] Average Loss: 1.4330
-[Test] Accuracy: 5117/10000 (51.17%)
+[INFO] Starting epoch 37/40
+Epoch 37:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 37] Learning rate: 0.000676
+[Epoch 37] Average Loss: 0.6128                                                 
+[Test] Accuracy: 6590/10000 (65.90%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch37.pkl
-[INFO] Starting epoch 38/200
-[Epoch 38] Average Loss: 1.4326
-[Test] Accuracy: 5172/10000 (51.72%)
+[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
+[Checkpoint] Model saved to checkpoint/cnn_best.pkl
+[INFO] New best model saved: checkpoint/cnn_best.pkl
+[INFO] Starting epoch 38/40
+Epoch 38:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 38] Learning rate: 0.000383
+[Epoch 38] Average Loss: 0.6095                                                 
+[Test] Accuracy: 6598/10000 (65.98%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch38.pkl
 [DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
 [Checkpoint] Model saved to checkpoint/cnn_best.pkl
 [INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 39/200
-[Epoch 39] Average Loss: 1.4246
-[Test] Accuracy: 5205/10000 (52.05%)
+[INFO] Starting epoch 39/40
+Epoch 39:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 39] Learning rate: 0.000171
+[Epoch 39] Average Loss: 0.6075                                                 
+[Test] Accuracy: 6593/10000 (65.93%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch39.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 40/200
-[Epoch 40] Average Loss: 1.4198
-[Test] Accuracy: 5187/10000 (51.87%)
+[INFO] Starting epoch 40/40
+Epoch 40:   0%|                                         | 0/782 [00:00<?, ?it/s][Epoch 40] Learning rate: 0.000044
+[Epoch 40] Average Loss: 0.6063                                                 
+[Test] Accuracy: 6589/10000 (65.89%)
 [Checkpoint] Model saved to checkpoint/cnn_epoch40.pkl
-[INFO] Starting epoch 41/200
-[Epoch 41] Average Loss: 1.4171
-[Test] Accuracy: 5228/10000 (52.28%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch41.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 42/200
-[Epoch 42] Average Loss: 1.4160
-[Test] Accuracy: 5248/10000 (52.48%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch42.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 43/200
-[Epoch 43] Average Loss: 1.4074
-[Test] Accuracy: 5259/10000 (52.59%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch43.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 44/200
-[Epoch 44] Average Loss: 1.4056
-[Test] Accuracy: 5221/10000 (52.21%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch44.pkl
-[INFO] Starting epoch 45/200
-[Epoch 45] Average Loss: 1.4031
-[Test] Accuracy: 5243/10000 (52.43%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch45.pkl
-[INFO] Starting epoch 46/200
-[Epoch 46] Average Loss: 1.4028
-[Test] Accuracy: 5295/10000 (52.95%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch46.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 47/200
-[Epoch 47] Average Loss: 1.3977
-[Test] Accuracy: 5324/10000 (53.24%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch47.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 48/200
-[Epoch 48] Average Loss: 1.3930
-[Test] Accuracy: 5311/10000 (53.11%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch48.pkl
-[INFO] Starting epoch 49/200
-[Epoch 49] Average Loss: 1.3912
-[Test] Accuracy: 5352/10000 (53.52%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch49.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 50/200
-[Epoch 50] Average Loss: 1.3863
-[Test] Accuracy: 5282/10000 (52.82%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch50.pkl
-[INFO] Starting epoch 51/200
-[Epoch 51] Average Loss: 1.3840
-[Test] Accuracy: 5326/10000 (53.26%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch51.pkl
-[INFO] Starting epoch 52/200
-[Epoch 52] Average Loss: 1.3783
-[Test] Accuracy: 5346/10000 (53.46%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch52.pkl
-[INFO] Starting epoch 53/200
-[Epoch 53] Average Loss: 1.3796
-[Test] Accuracy: 5359/10000 (53.59%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch53.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 54/200
-[Epoch 54] Average Loss: 1.3754
-[Test] Accuracy: 5336/10000 (53.36%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch54.pkl
-[INFO] Starting epoch 55/200
-[Epoch 55] Average Loss: 1.3699
-[Test] Accuracy: 5388/10000 (53.88%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch55.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 56/200
-[Epoch 56] Average Loss: 1.3639
-[Test] Accuracy: 5380/10000 (53.80%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch56.pkl
-[INFO] Starting epoch 57/200
-[Epoch 57] Average Loss: 1.3669
-[Test] Accuracy: 5406/10000 (54.06%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch57.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 58/200
-[Epoch 58] Average Loss: 1.3588
-[Test] Accuracy: 5416/10000 (54.16%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch58.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 59/200
-[Epoch 59] Average Loss: 1.3564
-[Test] Accuracy: 5382/10000 (53.82%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch59.pkl
-[INFO] Starting epoch 60/200
-[Epoch 60] Average Loss: 1.3546
-[Test] Accuracy: 5443/10000 (54.43%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch60.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 61/200
-[Epoch 61] Average Loss: 1.3519
-[Test] Accuracy: 5381/10000 (53.81%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch61.pkl
-[INFO] Starting epoch 62/200
-[Epoch 62] Average Loss: 1.3461
-[Test] Accuracy: 5465/10000 (54.65%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch62.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 63/200
-[Epoch 63] Average Loss: 1.3449
-[Test] Accuracy: 5465/10000 (54.65%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch63.pkl
-[INFO] Starting epoch 64/200
-[Epoch 64] Average Loss: 1.3411
-[Test] Accuracy: 5468/10000 (54.68%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch64.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 65/200
-[Epoch 65] Average Loss: 1.3364
-[Test] Accuracy: 5433/10000 (54.33%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch65.pkl
-[INFO] Starting epoch 66/200
-[Epoch 66] Average Loss: 1.3311
-[Test] Accuracy: 5464/10000 (54.64%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch66.pkl
-[INFO] Starting epoch 67/200
-[Epoch 67] Average Loss: 1.3329
-[Test] Accuracy: 5480/10000 (54.80%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch67.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 68/200
-[Epoch 68] Average Loss: 1.3308
-[Test] Accuracy: 5495/10000 (54.95%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch68.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 69/200
-[Epoch 69] Average Loss: 1.3280
-[Test] Accuracy: 5491/10000 (54.91%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch69.pkl
-[INFO] Starting epoch 70/200
-[Epoch 70] Average Loss: 1.3243
-[Test] Accuracy: 5421/10000 (54.21%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch70.pkl
-[INFO] Starting epoch 71/200
-[Epoch 71] Average Loss: 1.3211
-[Test] Accuracy: 5503/10000 (55.03%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch71.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 72/200
-[Epoch 72] Average Loss: 1.3194
-[Test] Accuracy: 5507/10000 (55.07%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch72.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 73/200
-[Epoch 73] Average Loss: 1.3180
-[Test] Accuracy: 5534/10000 (55.34%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch73.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 74/200
-[Epoch 74] Average Loss: 1.3152
-[Test] Accuracy: 5538/10000 (55.38%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch74.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 75/200
-[Epoch 75] Average Loss: 1.3095
-[Test] Accuracy: 5525/10000 (55.25%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch75.pkl
-[INFO] Starting epoch 76/200
-[Epoch 76] Average Loss: 1.3077
-[Test] Accuracy: 5530/10000 (55.30%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch76.pkl
-[INFO] Starting epoch 77/200
-[Epoch 77] Average Loss: 1.3071
-[Test] Accuracy: 5529/10000 (55.29%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch77.pkl
-[INFO] Starting epoch 78/200
-[Epoch 78] Average Loss: 1.2994
-[Test] Accuracy: 5583/10000 (55.83%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch78.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 79/200
-[Epoch 79] Average Loss: 1.3047
-[Test] Accuracy: 5563/10000 (55.63%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch79.pkl
-[INFO] Starting epoch 80/200
-[Epoch 80] Average Loss: 1.2962
-[Test] Accuracy: 5540/10000 (55.40%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch80.pkl
-[INFO] Starting epoch 81/200
-[Epoch 81] Average Loss: 1.2996
-[Test] Accuracy: 5558/10000 (55.58%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch81.pkl
-[INFO] Starting epoch 82/200
-[Epoch 82] Average Loss: 1.2908
-[Test] Accuracy: 5576/10000 (55.76%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch82.pkl
-[INFO] Starting epoch 83/200
-[Epoch 83] Average Loss: 1.2892
-[Test] Accuracy: 5576/10000 (55.76%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch83.pkl
-[INFO] Starting epoch 84/200
-[Epoch 84] Average Loss: 1.2896
-[Test] Accuracy: 5576/10000 (55.76%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch84.pkl
-[INFO] Starting epoch 85/200
-[Epoch 85] Average Loss: 1.2834
-[Test] Accuracy: 5600/10000 (56.00%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch85.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 86/200
-[Epoch 86] Average Loss: 1.2833
-[Test] Accuracy: 5620/10000 (56.20%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch86.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 87/200
-[Epoch 87] Average Loss: 1.2780
-[Test] Accuracy: 5611/10000 (56.11%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch87.pkl
-[INFO] Starting epoch 88/200
-[Epoch 88] Average Loss: 1.2782
-[Test] Accuracy: 5638/10000 (56.38%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch88.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 89/200
-[Epoch 89] Average Loss: 1.2765
-[Test] Accuracy: 5632/10000 (56.32%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch89.pkl
-[INFO] Starting epoch 90/200
-[Epoch 90] Average Loss: 1.2753
-[Test] Accuracy: 5624/10000 (56.24%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch90.pkl
-[INFO] Starting epoch 91/200
-[Epoch 91] Average Loss: 1.2747
-[Test] Accuracy: 5635/10000 (56.35%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch91.pkl
-[INFO] Starting epoch 92/200
-[Epoch 92] Average Loss: 1.2693
-[Test] Accuracy: 5640/10000 (56.40%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch92.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 93/200
-[Epoch 93] Average Loss: 1.2683
-[Test] Accuracy: 5636/10000 (56.36%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch93.pkl
-[INFO] Starting epoch 94/200
-[Epoch 94] Average Loss: 1.2673
-[Test] Accuracy: 5651/10000 (56.51%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch94.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 95/200
-[Epoch 95] Average Loss: 1.2615
-[Test] Accuracy: 5631/10000 (56.31%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch95.pkl
-[INFO] Starting epoch 96/200
-[Epoch 96] Average Loss: 1.2618
-[Test] Accuracy: 5660/10000 (56.60%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch96.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 97/200
-[Epoch 97] Average Loss: 1.2606
-[Test] Accuracy: 5644/10000 (56.44%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch97.pkl
-[INFO] Starting epoch 98/200
-[Epoch 98] Average Loss: 1.2520
-[Test] Accuracy: 5651/10000 (56.51%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch98.pkl
-[INFO] Starting epoch 99/200
-[Epoch 99] Average Loss: 1.2509
-[Test] Accuracy: 5651/10000 (56.51%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch99.pkl
-[INFO] Starting epoch 100/200
-[Epoch 100] Average Loss: 1.2523
-[Test] Accuracy: 5692/10000 (56.92%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch100.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 101/200
-[Epoch 101] Average Loss: 1.2514
-[Test] Accuracy: 5667/10000 (56.67%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch101.pkl
-[INFO] Starting epoch 102/200
-[Epoch 102] Average Loss: 1.2420
-[Test] Accuracy: 5678/10000 (56.78%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch102.pkl
-[INFO] Starting epoch 103/200
-[Epoch 103] Average Loss: 1.2489
-[Test] Accuracy: 5667/10000 (56.67%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch103.pkl
-[INFO] Starting epoch 104/200
-[Epoch 104] Average Loss: 1.2424
-[Test] Accuracy: 5700/10000 (57.00%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch104.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 105/200
-[Epoch 105] Average Loss: 1.2414
-[Test] Accuracy: 5694/10000 (56.94%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch105.pkl
-[INFO] Starting epoch 106/200
-[Epoch 106] Average Loss: 1.2404
-[Test] Accuracy: 5712/10000 (57.12%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch106.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 107/200
-[Epoch 107] Average Loss: 1.2391
-[Test] Accuracy: 5633/10000 (56.33%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch107.pkl
-[INFO] Starting epoch 108/200
-[Epoch 108] Average Loss: 1.2371
-[Test] Accuracy: 5677/10000 (56.77%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch108.pkl
-[INFO] Starting epoch 109/200
-[Epoch 109] Average Loss: 1.2328
-[Test] Accuracy: 5724/10000 (57.24%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch109.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 110/200
-[Epoch 110] Average Loss: 1.2372
-[Test] Accuracy: 5722/10000 (57.22%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch110.pkl
-[INFO] Starting epoch 111/200
-[Epoch 111] Average Loss: 1.2312
-[Test] Accuracy: 5711/10000 (57.11%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch111.pkl
-[INFO] Starting epoch 112/200
-[Epoch 112] Average Loss: 1.2273
-[Test] Accuracy: 5720/10000 (57.20%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch112.pkl
-[INFO] Starting epoch 113/200
-[Epoch 113] Average Loss: 1.2278
-[Test] Accuracy: 5705/10000 (57.05%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch113.pkl
-[INFO] Starting epoch 114/200
-[Epoch 114] Average Loss: 1.2261
-[Test] Accuracy: 5708/10000 (57.08%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch114.pkl
-[INFO] Starting epoch 115/200
-[Epoch 115] Average Loss: 1.2247
-[Test] Accuracy: 5698/10000 (56.98%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch115.pkl
-[INFO] Starting epoch 116/200
-[Epoch 116] Average Loss: 1.2240
-[Test] Accuracy: 5703/10000 (57.03%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch116.pkl
-[INFO] Starting epoch 117/200
-[Epoch 117] Average Loss: 1.2191
-[Test] Accuracy: 5700/10000 (57.00%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch117.pkl
-[INFO] Starting epoch 118/200
-[Epoch 118] Average Loss: 1.2220
-[Test] Accuracy: 5721/10000 (57.21%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch118.pkl
-[INFO] Starting epoch 119/200
-[Epoch 119] Average Loss: 1.2191
-[Test] Accuracy: 5726/10000 (57.26%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch119.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 120/200
-[Epoch 120] Average Loss: 1.2147
-[Test] Accuracy: 5729/10000 (57.29%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch120.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 121/200
-[Epoch 121] Average Loss: 1.2173
-[Test] Accuracy: 5736/10000 (57.36%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch121.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 122/200
-[Epoch 122] Average Loss: 1.2134
-[Test] Accuracy: 5706/10000 (57.06%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch122.pkl
-[INFO] Starting epoch 123/200
-[Epoch 123] Average Loss: 1.2105
-[Test] Accuracy: 5679/10000 (56.79%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch123.pkl
-[INFO] Starting epoch 124/200
-[Epoch 124] Average Loss: 1.2109
-[Test] Accuracy: 5750/10000 (57.50%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch124.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 125/200
-[Epoch 125] Average Loss: 1.2066
-[Test] Accuracy: 5732/10000 (57.32%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch125.pkl
-[INFO] Starting epoch 126/200
-[Epoch 126] Average Loss: 1.2068
-[Test] Accuracy: 5747/10000 (57.47%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch126.pkl
-[INFO] Starting epoch 127/200
-[Epoch 127] Average Loss: 1.2044
-[Test] Accuracy: 5708/10000 (57.08%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch127.pkl
-[INFO] Starting epoch 128/200
-[Epoch 128] Average Loss: 1.2036
-[Test] Accuracy: 5748/10000 (57.48%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch128.pkl
-[INFO] Starting epoch 129/200
-[Epoch 129] Average Loss: 1.2028
-[Test] Accuracy: 5769/10000 (57.69%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch129.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 130/200
-[Epoch 130] Average Loss: 1.1972
-[Test] Accuracy: 5780/10000 (57.80%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch130.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 131/200
-[Epoch 131] Average Loss: 1.1944
-[Test] Accuracy: 5738/10000 (57.38%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch131.pkl
-[INFO] Starting epoch 132/200
-[Epoch 132] Average Loss: 1.1945
-[Test] Accuracy: 5754/10000 (57.54%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch132.pkl
-[INFO] Starting epoch 133/200
-[Epoch 133] Average Loss: 1.1951
-[Test] Accuracy: 5756/10000 (57.56%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch133.pkl
-[INFO] Starting epoch 134/200
-[Epoch 134] Average Loss: 1.1907
-[Test] Accuracy: 5748/10000 (57.48%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch134.pkl
-[INFO] Starting epoch 135/200
-[Epoch 135] Average Loss: 1.1932
-[Test] Accuracy: 5768/10000 (57.68%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch135.pkl
-[INFO] Starting epoch 136/200
-[Epoch 136] Average Loss: 1.1878
-[Test] Accuracy: 5785/10000 (57.85%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch136.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 137/200
-[Epoch 137] Average Loss: 1.1826
-[Test] Accuracy: 5789/10000 (57.89%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch137.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 138/200
-[Epoch 138] Average Loss: 1.1859
-[Test] Accuracy: 5756/10000 (57.56%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch138.pkl
-[INFO] Starting epoch 139/200
-[Epoch 139] Average Loss: 1.1828
-[Test] Accuracy: 5784/10000 (57.84%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch139.pkl
-[INFO] Starting epoch 140/200
-[Epoch 140] Average Loss: 1.1846
-[Test] Accuracy: 5774/10000 (57.74%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch140.pkl
-[INFO] Starting epoch 141/200
-[Epoch 141] Average Loss: 1.1732
-[Test] Accuracy: 5793/10000 (57.93%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch141.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 142/200
-[Epoch 142] Average Loss: 1.1806
-[Test] Accuracy: 5797/10000 (57.97%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch142.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 143/200
-[Epoch 143] Average Loss: 1.1768
-[Test] Accuracy: 5789/10000 (57.89%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch143.pkl
-[INFO] Starting epoch 144/200
-[Epoch 144] Average Loss: 1.1733
-[Test] Accuracy: 5823/10000 (58.23%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch144.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 145/200
-[Epoch 145] Average Loss: 1.1771
-[Test] Accuracy: 5799/10000 (57.99%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch145.pkl
-[INFO] Starting epoch 146/200
-[Epoch 146] Average Loss: 1.1748
-[Test] Accuracy: 5806/10000 (58.06%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch146.pkl
-[INFO] Starting epoch 147/200
-[Epoch 147] Average Loss: 1.1687
-[Test] Accuracy: 5802/10000 (58.02%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch147.pkl
-[INFO] Starting epoch 148/200
-[Epoch 148] Average Loss: 1.1663
-[Test] Accuracy: 5843/10000 (58.43%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch148.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 149/200
-[Epoch 149] Average Loss: 1.1687
-[Test] Accuracy: 5803/10000 (58.03%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch149.pkl
-[INFO] Starting epoch 150/200
-[Epoch 150] Average Loss: 1.1669
-[Test] Accuracy: 5793/10000 (57.93%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch150.pkl
-[INFO] Starting epoch 151/200
-[Epoch 151] Average Loss: 1.1666
-[Test] Accuracy: 5805/10000 (58.05%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch151.pkl
-[INFO] Starting epoch 152/200
-[Epoch 152] Average Loss: 1.1637
-[Test] Accuracy: 5810/10000 (58.10%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch152.pkl
-[INFO] Starting epoch 153/200
-[Epoch 153] Average Loss: 1.1602
-[Test] Accuracy: 5815/10000 (58.15%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch153.pkl
-[INFO] Starting epoch 154/200
-[Epoch 154] Average Loss: 1.1596
-[Test] Accuracy: 5804/10000 (58.04%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch154.pkl
-[INFO] Starting epoch 155/200
-[Epoch 155] Average Loss: 1.1569
-[Test] Accuracy: 5821/10000 (58.21%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch155.pkl
-[INFO] Starting epoch 156/200
-[Epoch 156] Average Loss: 1.1643
-[Test] Accuracy: 5814/10000 (58.14%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch156.pkl
-[INFO] Starting epoch 157/200
-[Epoch 157] Average Loss: 1.1597
-[Test] Accuracy: 5831/10000 (58.31%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch157.pkl
-[INFO] Starting epoch 158/200
-[Epoch 158] Average Loss: 1.1594
-[Test] Accuracy: 5854/10000 (58.54%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch158.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 159/200
-[Epoch 159] Average Loss: 1.1504
-[Test] Accuracy: 5807/10000 (58.07%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch159.pkl
-[INFO] Starting epoch 160/200
-[Epoch 160] Average Loss: 1.1498
-[Test] Accuracy: 5819/10000 (58.19%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch160.pkl
-[INFO] Starting epoch 161/200
-[Epoch 161] Average Loss: 1.1508
-[Test] Accuracy: 5815/10000 (58.15%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch161.pkl
-[INFO] Starting epoch 162/200
-[Epoch 162] Average Loss: 1.1489
-[Test] Accuracy: 5842/10000 (58.42%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch162.pkl
-[INFO] Starting epoch 163/200
-[Epoch 163] Average Loss: 1.1537
-[Test] Accuracy: 5861/10000 (58.61%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch163.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 164/200
-[Epoch 164] Average Loss: 1.1523
-[Test] Accuracy: 5841/10000 (58.41%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch164.pkl
-[INFO] Starting epoch 165/200
-[Epoch 165] Average Loss: 1.1515
-[Test] Accuracy: 5843/10000 (58.43%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch165.pkl
-[INFO] Starting epoch 166/200
-[Epoch 166] Average Loss: 1.1450
-[Test] Accuracy: 5866/10000 (58.66%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch166.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 167/200
-[Epoch 167] Average Loss: 1.1412
-[Test] Accuracy: 5859/10000 (58.59%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch167.pkl
-[INFO] Starting epoch 168/200
-[Epoch 168] Average Loss: 1.1436
-[Test] Accuracy: 5826/10000 (58.26%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch168.pkl
-[INFO] Starting epoch 169/200
-[Epoch 169] Average Loss: 1.1348
-[Test] Accuracy: 5860/10000 (58.60%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch169.pkl
-[INFO] Starting epoch 170/200
-[Epoch 170] Average Loss: 1.1346
-[Test] Accuracy: 5818/10000 (58.18%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch170.pkl
-[INFO] Starting epoch 171/200
-[Epoch 171] Average Loss: 1.1419
-[Test] Accuracy: 5869/10000 (58.69%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch171.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 172/200
-[Epoch 172] Average Loss: 1.1336
-[Test] Accuracy: 5862/10000 (58.62%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch172.pkl
-[INFO] Starting epoch 173/200
-[Epoch 173] Average Loss: 1.1335
-[Test] Accuracy: 5852/10000 (58.52%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch173.pkl
-[INFO] Starting epoch 174/200
-[Epoch 174] Average Loss: 1.1304
-[Test] Accuracy: 5839/10000 (58.39%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch174.pkl
-[INFO] Starting epoch 175/200
-[Epoch 175] Average Loss: 1.1289
-[Test] Accuracy: 5852/10000 (58.52%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch175.pkl
-[INFO] Starting epoch 176/200
-[Epoch 176] Average Loss: 1.1289
-[Test] Accuracy: 5770/10000 (57.70%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch176.pkl
-[INFO] Starting epoch 177/200
-[Epoch 177] Average Loss: 1.1302
-[Test] Accuracy: 5832/10000 (58.32%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch177.pkl
-[INFO] Starting epoch 178/200
-[Epoch 178] Average Loss: 1.1264
-[Test] Accuracy: 5842/10000 (58.42%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch178.pkl
-[INFO] Starting epoch 179/200
-[Epoch 179] Average Loss: 1.1278
-[Test] Accuracy: 5842/10000 (58.42%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch179.pkl
-[INFO] Starting epoch 180/200
-[Epoch 180] Average Loss: 1.1238
-[Test] Accuracy: 5839/10000 (58.39%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch180.pkl
-[INFO] Starting epoch 181/200
-[Epoch 181] Average Loss: 1.1254
-[Test] Accuracy: 5837/10000 (58.37%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch181.pkl
-[INFO] Starting epoch 182/200
-[Epoch 182] Average Loss: 1.1185
-[Test] Accuracy: 5876/10000 (58.76%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch182.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 183/200
-[Epoch 183] Average Loss: 1.1211
-[Test] Accuracy: 5842/10000 (58.42%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch183.pkl
-[INFO] Starting epoch 184/200
-[Epoch 184] Average Loss: 1.1135
-[Test] Accuracy: 5900/10000 (59.00%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch184.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 185/200
-[Epoch 185] Average Loss: 1.1184
-[Test] Accuracy: 5860/10000 (58.60%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch185.pkl
-[INFO] Starting epoch 186/200
-[Epoch 186] Average Loss: 1.1175
-[Test] Accuracy: 5848/10000 (58.48%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch186.pkl
-[INFO] Starting epoch 187/200
-[Epoch 187] Average Loss: 1.1097
-[Test] Accuracy: 5899/10000 (58.99%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch187.pkl
-[INFO] Starting epoch 188/200
-[Epoch 188] Average Loss: 1.1162
-[Test] Accuracy: 5865/10000 (58.65%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch188.pkl
-[INFO] Starting epoch 189/200
-[Epoch 189] Average Loss: 1.1153
-[Test] Accuracy: 5831/10000 (58.31%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch189.pkl
-[INFO] Starting epoch 190/200
-[Epoch 190] Average Loss: 1.1164
-[Test] Accuracy: 5860/10000 (58.60%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch190.pkl
-[INFO] Starting epoch 191/200
-[Epoch 191] Average Loss: 1.1106
-[Test] Accuracy: 5888/10000 (58.88%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch191.pkl
-[INFO] Starting epoch 192/200
-[Epoch 192] Average Loss: 1.1109
-[Test] Accuracy: 5877/10000 (58.77%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch192.pkl
-[INFO] Starting epoch 193/200
-[Epoch 193] Average Loss: 1.1041
-[Test] Accuracy: 5890/10000 (58.90%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch193.pkl
-[INFO] Starting epoch 194/200
-[Epoch 194] Average Loss: 1.1029
-[Test] Accuracy: 5909/10000 (59.09%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch194.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 195/200
-[Epoch 195] Average Loss: 1.1065
-[Test] Accuracy: 5845/10000 (58.45%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch195.pkl
-[INFO] Starting epoch 196/200
-[Epoch 196] Average Loss: 1.1004
-[Test] Accuracy: 5893/10000 (58.93%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch196.pkl
-[INFO] Starting epoch 197/200
-[Epoch 197] Average Loss: 1.1075
-[Test] Accuracy: 5906/10000 (59.06%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch197.pkl
-[INFO] Starting epoch 198/200
-[Epoch 198] Average Loss: 1.1006
-[Test] Accuracy: 5907/10000 (59.07%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch198.pkl
-[INFO] Starting epoch 199/200
-[Epoch 199] Average Loss: 1.0989
-[Test] Accuracy: 5915/10000 (59.15%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch199.pkl
-[DEBUG] Checkpoint path: checkpoint/cnn_best.pkl
-[Checkpoint] Model saved to checkpoint/cnn_best.pkl
-[INFO] New best model saved: checkpoint/cnn_best.pkl
-[INFO] Starting epoch 200/200
-[Epoch 200] Average Loss: 1.0990
-[Test] Accuracy: 5905/10000 (59.05%)
-[Checkpoint] Model saved to checkpoint/cnn_epoch200.pkl
-[RESULT] Best test accuracy: 59.15% (model: checkpoint/cnn_best.pkl)
+[RESULT] Best test accuracy: 65.98% (model: checkpoint/cnn_best.pkl)
