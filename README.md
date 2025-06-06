@@ -51,9 +51,6 @@ A pure NumPy/CuPy implementation of Convolutional Neural Networks for CIFAR-10 c
 git clone https://github.com/definfo/cnn-cifar-10.git
 cd cnn-cifar-10
 
-# (Optional) Reuse pre-trained model checkpoints
-git lfs pull
-
 # Install Nix
 curl -fsSL https://install.determinate.systems/nix \
   | sh -s -- install --determinate
@@ -84,7 +81,7 @@ uv sync
 uv sync --group cuda
 
 # (Optional) Configure CuPy with CUDA libraries for extra speedup
-# `<library>` can be replaced by cutensor/nccl/cudnn
+# `<library>` can be one of cutensor/nccl/cudnn
 uv run python -m cupyx.tools.install_library --library <library> --cuda 12.x
 
 # Check CuPy status
@@ -191,8 +188,7 @@ uv run src/test_cli.py --model resnet32 --resume checkpoint/resnet32_best.pkl
 - **Training time**:
   - 66 min total (Intel Core i7-12700H CPU, 200 epochs)
   - 20 min total (NVIDIA GeForce RTX 3060 Laptop GPU, 200 epochs)
-- **Expected accuracy**: 70-80% on CIFAR-10 (with 200-epoch training + scheduling)
-- **Parameters**: ~50K
+- **Expected accuracy**: 62-65% on CIFAR-10 (with 200-epoch training + scheduling)
 
 ### ResNet-32
 
@@ -200,7 +196,6 @@ uv run src/test_cli.py --model resnet32 --resume checkpoint/resnet32_best.pkl
   - 50 min / epoch (Intel Core i7-12700H CPU)
   - 7.5 min / epoch (NVIDIA GeForce RTX 3060 Laptop GPU)
 - **Expected accuracy**: 75-80% on CIFAR-10 (with scheduling)
-- **Parameters**: ~460K
 
 ## Scheduling Strategies
 
@@ -264,7 +259,8 @@ Each residual block contains:
 
 ## Known issues
 
-- Test accuracy during training appears to be lower than actual value.
+- SimpleCNN training may be unstable after ~10 epoches
+  (even though test_acc increments in general).
 
 - Current model serde implementation is not optimal and may contain garbage variables.
 
