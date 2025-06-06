@@ -8,7 +8,7 @@ A pure NumPy/CuPy implementation of Convolutional Neural Networks for CIFAR-10 c
 
 - Basic CNN with convolution, batchnorm, ReLU, maxpooling, fully connected layers
 - Lightweight architecture suitable for quick experiments
-- **Recommended settings**: SGD optimizer, lr=0.01, dropout=0.5, 200 epochs
+- **Recommended settings**: SGD optimizer, lr=0.01, dropout=0.5, 300 epochs
 
 ### ResNet-32
 
@@ -21,33 +21,30 @@ A pure NumPy/CuPy implementation of Convolutional Neural Networks for CIFAR-10 c
 
 ### Preparation
 
-Before diving in, ensure that you have Nix installed on your system. If not, you
-can download and install it from the official
-[Nix website](https://nixos.org/download.html) or from the
-[Determinate Systems installer](https://github.com/DeterminateSystems/nix-installer).
-If running on macOS, you need to have Nix-Darwin installed, as well. You can
-follow the installation instruction on
-[GitHub](https://github.com/LnL7/nix-darwin?tab=readme-ov-file#flakes).
-
-You may also install [direnv](https://direnv.net/docs/installation.html) for better
-devshell integration.
-
 ```bash
 # Clone this repo
 git clone https://github.com/definfo/cnn-cifar-10.git
 cd cnn-cifar-10
 
 # (Optional) Reuse pre-trained model checkpoints
-# NOTE: this checkpoint is only usable with CuPy backend
 git lfs pull
 
-# with direnv (see `.envrc` for details)
-direnv allow
+# Install Nix
+curl -fsSL https://install.determinate.systems/nix \
+  | sh -s -- install --determinate
 
-# without direnv
+# If direnv is installed, (see `.envrc` for details)
+# The following command can automatically load the
+# devshell environment when cd into this directory.
+
+# direnv allow
+
+# Otherwise, enter the devshell with one of the
+# following commands.
+# NumPy
 nix develop .#impure
 
-# CUDA
+# OR CuPy with CUDA Backend
 nix develop .#cuda
 ```
 
@@ -83,6 +80,10 @@ uv run src/train_cli.py --model cnn
 
 # ResNet-32 with optimized defaults
 uv run src/train_cli.py --model resnet32
+
+# OR resume training on pre-trained weights
+git lfs pull
+uv run src/train_cli.py --model cnn --resume checkpoint/cnn_best.pkl.bak
 ```
 
 The framework automatically sets optimal hyperparameters for each model:
@@ -127,12 +128,6 @@ uv run src/train_cli.py \
     --data data/cifar-10-batches-py
 ```
 
-### Resume Training
-
-```bash
-uv run src/train_cli.py --model resnet32 --resume checkpoint/resnet32_epoch25.pkl
-```
-
 ### Run test on checkpoint
 
 ```bash
@@ -156,6 +151,10 @@ uv run src/test_cli.py --model resnet32 --resume checkpoint/resnet32_best.pkl
   - 7.5 min / epoch (NVIDIA GeForce RTX 3060 Laptop GPU)
 - **Expected accuracy**: 70-75% on CIFAR-10
 - **Parameters**: ~460K
+
+## Visualization
+
+See [README_visualization.md](./README_visualization.md)
 
 ## Model Architecture
 
@@ -187,10 +186,8 @@ Each residual block contains:
 
 ## Known issues
 
-1. Model checkpoints cannot be reused across backends (NumPy/CuPy).
+- Test accuracy during training appears to be lower than actual value.
 
-1. Test accuracy during training appears to be lower than actual value.
+- Current model serde implementation is not optimal and may contain garbage variables.
 
-1. Current model serde implementation is not optimal and may contain garbage variables.
-
-1. `train_utils.py` contains fragile vibe-coding snippets, which requires refactoring.
+- `train_utils.py` contains fragile vibe-coding snippets, which requires refactoring.

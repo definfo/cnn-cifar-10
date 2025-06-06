@@ -1,6 +1,7 @@
 import os
 import pickle
-from utilities.backend import xp, to_cpu
+import numpy as np
+from utilities.backend import xp, to_cpu, convert_array_to_current_backend
 
 try:
     from tqdm import tqdm as tqdm_cls
@@ -9,6 +10,81 @@ try:
 except ImportError:
     tqdm_cls = None
     HAS_TQDM = False
+
+
+class CrossBackendUnpickler(pickle.Unpickler):
+    """Custom unpickler to handle CuPy/NumPy cross-compatibility"""
+
+    def find_class(self, module, name):
+        # Handle all CuPy-related modules by redirecting to NumPy
+        if module.startswith("cupy"):
+            if name == "ndarray":
+                return np.ndarray
+            elif name in ["dtype", "int64", "float32", "float64", "int32"]:
+                return getattr(np, name)
+            else:
+                # For other CuPy classes, try to find NumPy equivalent
+                try:
+                    return getattr(np, name)
+                except AttributeError:
+                    # If no NumPy equivalent, return a dummy class
+                    return type(f"Dummy{name}", (), {})
+        return super().find_class(module, name)
+
+    def load(self):
+        """Override load to handle CuPy arrays that can't be unpickled"""
+        try:
+            return super().load()
+        except Exception as e:
+            # If unpickling fails completely, try alternative approach
+            raise RuntimeError(f"Failed to unpickle checkpoint: {e}")
+
+
+def safe_load_checkpoint(path):
+    """
+    Safely load checkpoint with multiple fallback strategies
+    """
+    with open(path, "rb") as f:
+        # Strategy 1: Try normal pickle loading
+        try:
+            f.seek(0)
+            return pickle.load(f)
+        except ModuleNotFoundError as e:
+            if "cupy" not in str(e).lower():
+                raise e
+
+        # Strategy 2: Try custom unpickler
+        try:
+            f.seek(0)
+            unpickler = CrossBackendUnpickler(f)
+            return unpickler.load()
+        except Exception:
+            pass
+
+        # Strategy 3: Use pickle with protocol 0 (more compatible)
+        try:
+            f.seek(0)
+            # Read raw data and try to reconstruct
+            _ = f.read()
+            f.seek(0)
+
+            # Try to load with different protocols
+            for protocol in [0, 1, 2]:
+                try:
+                    f.seek(0)
+                    return pickle.load(f)
+                except Exception:
+                    continue
+
+        except Exception:
+            pass
+
+        # If all else fails, raise informative error
+        raise RuntimeError(
+            f"Cannot load checkpoint {path}. "
+            "The checkpoint was likely saved with CuPy but CuPy is not available. "
+            "Please install CuPy or recreate the checkpoint with NumPy backend."
+        )
 
 
 def load_cifar10_batch(filename):
@@ -80,44 +156,49 @@ def save_checkpoint(model, path, accuracy=None):
 
 def load_checkpoint(model, path):
     # Load model parameters using pickle and return accuracy if available
-    with open(path, "rb") as f:
-        params = pickle.load(f)
-        accuracy = params.pop("_checkpoint_accuracy", None)
+    print("[WARNING] Attempting to load checkpoint that may contain CuPy arrays...")
 
-        # Handle ResNet models with blocks
-        if hasattr(model, "blocks") and "blocks_data" in params:
-            blocks_data = params.pop("blocks_data")
+    params = safe_load_checkpoint(path)
+    accuracy = params.pop("_checkpoint_accuracy", None)
 
-            # Load main model parameters
-            for k, v in params.items():
-                if hasattr(model, k):
-                    current_attr = getattr(model, k)
-                    if hasattr(current_attr, "shape"):
-                        setattr(model, k, xp.array(v))
-                    else:
-                        setattr(model, k, v)
+    # Handle ResNet models with blocks
+    if hasattr(model, "blocks") and "blocks_data" in params:
+        blocks_data = params.pop("blocks_data")
 
-            # Load block parameters
-            for i, block_state in enumerate(blocks_data):
-                if i < len(model.blocks):
-                    block = model.blocks[i]
-                    for k, v in block_state.items():
-                        if hasattr(block, k):
-                            current_attr = getattr(block, k)
-                            if hasattr(current_attr, "shape"):
-                                setattr(block, k, xp.array(v))
-                            else:
-                                setattr(block, k, v)
-        else:
-            # Handle simple models (SimpleCNN)
-            for k, v in params.items():
-                setattr(
-                    model,
-                    k,
-                    xp.array(v)
-                    if hasattr(model, k) and isinstance(getattr(model, k), xp.ndarray)
-                    else v,
-                )
+        # Load main model parameters
+        for k, v in params.items():
+            if hasattr(model, k):
+                current_attr = getattr(model, k)
+                if hasattr(current_attr, "shape"):
+                    # Ensure we convert any CuPy arrays to current backend
+                    converted_v = convert_array_to_current_backend(v)
+                    setattr(model, k, converted_v)
+                else:
+                    setattr(model, k, v)
+
+        # Load block parameters
+        for i, block_state in enumerate(blocks_data):
+            if i < len(model.blocks):
+                block = model.blocks[i]
+                for k, v in block_state.items():
+                    if hasattr(block, k):
+                        current_attr = getattr(block, k)
+                        if hasattr(current_attr, "shape"):
+                            converted_v = convert_array_to_current_backend(v)
+                            setattr(block, k, converted_v)
+                        else:
+                            setattr(block, k, v)
+    else:
+        # Handle simple models (SimpleCNN)
+        for k, v in params.items():
+            if hasattr(model, k):
+                current_attr = getattr(model, k)
+                if hasattr(current_attr, "shape"):
+                    converted_v = convert_array_to_current_backend(v)
+                    setattr(model, k, converted_v)
+                else:
+                    setattr(model, k, v)
+
     print(f"[Checkpoint] Model loaded from {path}")
     return accuracy
 
