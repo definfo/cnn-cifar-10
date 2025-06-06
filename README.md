@@ -10,8 +10,8 @@ A pure NumPy/CuPy implementation of Convolutional Neural Networks for CIFAR-10 c
 - Lightweight architecture suitable for thorough training
 - **Recommended settings**:
   - SGD optimizer
-  - lr=0.02
-  - dropout=0.6→0.2 (linear decay), 200 epochs
+  - lr=0.015
+  - dropout=0.6→0.2 (linear decay), 40 epochs
   - cosine schedule with 10 warmup epochs
 
 ### ResNet-32
@@ -97,7 +97,7 @@ Other possible dependencies:
 ### Training with Default Settings (Recommended)
 
 ```bash
-# SimpleCNN with optimized defaults (200 epochs, cosine schedule + warmup + dynamic dropout)
+# SimpleCNN with optimized defaults (40 epochs, cosine schedule + warmup + dynamic dropout)
 uv run src/train_cli.py --model cnn
 
 # ResNet-32 with optimized defaults (cosine schedule + warmup)
@@ -112,21 +112,20 @@ The framework automatically sets optimal hyperparameters for each model:
 
 | Model     | Optimizer | Base LR | Schedule | Warmup | Dropout         | Batch Size | Epochs |
 | --------- | --------- | ------- | -------- | ------ | --------------- | ---------- | ------ |
-| SimpleCNN | SGD       | 0.02    | Cosine   | 10     | 0.6→0.2 (decay) | 64         | 200    |
+| SimpleCNN | SGD       | 0.015   | Cosine   | 6      | 0.6→0.2 (decay) | 64         | 40     |
 | ResNet-32 | Adam      | 0.01    | Cosine   | 5      | 0.3             | 128        | 50     |
 
 ### Custom Training
 
 ```bash
-# Custom SimpleCNN with step scheduling (optimized for 200 epochs)
+# Custom SimpleCNN with step scheduling (optimized for 40 epochs)
 uv run src/train_cli.py \
     --model cnn \
-    --lr 0.02 \
+    --lr 0.015 \
     --lr-schedule step \
-    --lr-decay-steps 50 100 150 175 \
     --lr-decay-factor 0.1 \
     --dropout-schedule linear_decay \
-    --epochs 200
+    --epochs 40
 
 # Custom ResNet-32 with adaptive dropout
 uv run src/train_cli.py \
@@ -143,12 +142,12 @@ uv run src/train_cli.py \
 ### Advanced Training Options
 
 ```bash
-# SimpleCNN with full control over 200-epoch training
+# SimpleCNN with full control over 40-epoch training
 uv run src/train_cli.py \
     --model cnn \
-    --lr 0.025 \
+    --lr 0.015 \
     --lr-schedule cosine \
-    --warmup-epochs 15 \
+    --warmup-epochs 6 \
     --min-lr 1e-6 \
     --optimizer sgd \
     --dropout-rate 0.6 \
@@ -156,7 +155,7 @@ uv run src/train_cli.py \
     --min-dropout 0.2 \
     --max-dropout 0.7 \
     --batch-size 64 \
-    --epochs 200 \
+    --epochs 40 \
     --checkpoint-dir checkpoint \
     --data data/cifar-10-batches-py
 ```
@@ -186,9 +185,9 @@ uv run src/test_cli.py --model resnet32 --resume checkpoint/resnet32_best.pkl
 ### SimpleCNN
 
 - **Training time**:
-  - 66 min total (Intel Core i7-12700H CPU, 200 epochs)
-  - 20 min total (NVIDIA GeForce RTX 3060 Laptop GPU, 200 epochs)
-- **Expected accuracy**: 62-65% on CIFAR-10 (with 200-epoch training + scheduling)
+  - 66 min total (Intel Core i7-12700H CPU, 40 epochs)
+  - 20 min total (NVIDIA GeForce RTX 3060 Laptop GPU, 40 epochs)
+- **Expected accuracy**: ~65% on CIFAR-10 (with 40-epoch training + scheduling)
 
 ### ResNet-32
 
@@ -204,24 +203,23 @@ uv run src/test_cli.py --model resnet32 --resume checkpoint/resnet32_best.pkl
 1. **Cosine Annealing** (Recommended): Provides smooth decay with good convergence properties
 2. **Linear Decay**: Simple and effective for shorter training runs
 3. **Step Decay**: Good for fine-tuning and when you know optimal decay points
-   - **SimpleCNN 200-epoch optimized**: Steps at epochs 50, 100, 150, 175
 4. **Warmup**: Essential for training stability, especially with higher learning rates
 
 ### Dynamic Dropout
 
-1. **Linear Decay**: Gradually reduce overfitting as model learns (recommended for 200-epoch training)
+1. **Linear Decay**: Gradually reduce overfitting as model learns
 2. **Cosine Decay**: Smooth dropout reduction following cosine curve
 3. **Adaptive**: Automatically adjust based on validation performance
 4. **Constant**: Traditional approach, good baseline
 
-### Training Strategy for SimpleCNN (200 epochs)
+### Training Strategy for SimpleCNN (40 epochs)
 
-The 200-epoch training strategy for SimpleCNN is designed for maximum performance:
+The 40-epoch training strategy for SimpleCNN is designed for maximum performance:
 
-1. **High initial learning rate (0.02)** with cosine decay to explore the parameter space effectively
-2. **Longer warmup (10 epochs)** to stabilize training with the higher learning rate
+1. **High initial learning rate (0.015)** with cosine decay to explore the parameter space effectively
+2. **Longer warmup (6 epochs)** to stabilize training with the higher learning rate
 3. **Dynamic dropout (0.6→0.2)** to prevent overfitting early while allowing the model to learn complex patterns later
-4. **Extended training (200 epochs)** to fully converge and achieve optimal performance
+4. **Extended training (40 epochs)** to fully converge and achieve optimal performance
 
 This strategy typically achieves 10-15% higher accuracy than the previous 20-epoch default.
 
@@ -234,10 +232,13 @@ See [README_visualization.md](./README_visualization.md)
 ### SimpleCNN
 
 - Input: 3×32×32 (CIFAR-10 images)
-- Conv2D: 3→8 channels, 3×3 kernel
-- BatchNorm + ReLU + MaxPool (2×2)
-- Flatten: 8×15×15 → 1800
-- FC: 1800→128 + BatchNorm + ReLU + Dropout
+- Conv2D: 3→16 channels, 3×3 kernel
+- ReLU + MaxPool (2×2) → 16×15×15
+- Conv2D: 16→32 channels, 3×3 kernel
+- ReLU + MaxPool (2×2) → 32×6×6
+- Flatten: 32×6×6 → 1152
+- FC: 1152→256 + ReLU + Dropout
+- FC: 256→128 + ReLU + Dropout
 - FC: 128→10 (classes)
 
 ### ResNet-32
